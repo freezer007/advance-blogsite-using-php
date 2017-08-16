@@ -46,7 +46,7 @@ $bdate = $_POST["bdate"];
 $gender = $_POST["Gender"];
 $hash = md5( rand(0,1000) );
 $sql = "INSERT INTO user (uname, email, password ,isactive ,hash ,birthdate ,gender)
-        VALUES ('".$user."','".$email."','".$password."','0','".$hash."','".$bdate."','".$gender."')";
+        VALUES ('".$user."','".$email."','".$password."','1','".$hash."','".$bdate."','".$gender."')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -55,60 +55,6 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-require("../PHPMailer_5.2.0/class.phpmailer.php");
-
-$mail = new PHPMailer();
-
-$mail->IsSMTP();                                      // set mailer to use SMTP
-$mail->Host = "mail.smtp2go.com";  // specify main and backup server
-$mail->SMTPAuth = true;     // turn on SMTP authentication
-$mail->Username = "mailforfunfreee@gmail.com";  // SMTP username
-$mail->Password = "forfunfreee"; // SMTP password
-
-$mail->From = "admin@lemonlight.com";
-$mail->FromName = "Mailer";
-$mail->AddAddress($email);                // name is optional
-
-$mail->WordWrap = 50;                                 // set word wrap to 50 characters
-$mail->IsHTML(true);                                  // set email format to HTML
-
-$mail->Subject = "Signup | Verification";
-$mail->Body    = "
- 
-Thanks for signing up!
-Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. if it doesnt work then copy paste it in your browser
- 
-------------------------
-email: '.$email.'
-Password: '.$password.'
-------------------------
- 
-Please click this link to activate your account:
-http://localhost/emailverify.php?email=".$email."&hash=".$hash."
-";
-$mail->AltBody = "
- 
-Thanks for signing up!
-Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. if it doesnt work then copy paste it in your browser
- 
-------------------------
-email: '.$email.'
-Password: '.$password.'
-------------------------
- 
-Please click this link to activate your account:
-http://localhost/emailverify.php?email=".$email."&hash=".$hash."
-";
-
-if(!$mail->Send())
-{
-   echo "Message could not be sent. <p>";
-   echo "Mailer Error: " . $mail->ErrorInfo;
-   exit;
-}
-
-echo "Message has been sent";
-
 ?>
 		<!--header-->
 		<div class="header-w3l">

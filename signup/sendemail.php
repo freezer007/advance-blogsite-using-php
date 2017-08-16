@@ -59,8 +59,7 @@ Password: '.$password.'
 ------------------------
  
 Please click this link to activate your account:
-http://localhost/emailverify.php?email='.$email.'&hash='.$hash.'
- 
+http://localhost/emailverify.php?email=".$email."&hash=".$hash."
 "; // Our message above including the link
                      
 $headers = 'From:noreply@yourwebsite.com' . "\r\n"; // Set from headers

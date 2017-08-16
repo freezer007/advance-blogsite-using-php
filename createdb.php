@@ -38,16 +38,17 @@ id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 uname VARCHAR(30) NOT NULL,
 email varchar(50) NOT NULL,
 password VARCHAR(15) NOT NULL,
-adm boolean,
+isactive boolean DEFAULT false,
+hash varchar(32) DEFAULT 'COMEON',
+adm boolean DEFAULT false,
 birthdate date,
-gender boolean,
+gender varchar(1),
 description varchar(250),
-contry varchar(20),
-session varchar(20),
-lastsaw timestamp,
-permission varchar(3),
-following INT(8),
-follower INT(8)
+contry varchar(20) DEFAULT 'INDIA',
+lastsaw timestamp DEFAULT CURRENT_TIMESTAMP,
+permission varchar(3) DEFAULT 'RW-',
+following INT(8) DEFAULT 0,
+follower INT(8) DEFAULT 0
 )
 ";
 
@@ -58,16 +59,31 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
+$sql = "CREATE TABLE follow(
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+uname VARCHAR(30) NOT NULL,
+email varchar(50) NOT NULL,
+followerid INT(8)
+)
+";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Table active created successfully";
+    echo "</br>";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
+
 $sql = "CREATE TABLE blog(
 id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 uname VARCHAR(30) NOT NULL,
-blogdate timestamp,
-gener varchar(20),
+blogdate timestamp DEFAULT CURRENT_TIMESTAMP,
+gener varchar(20) DEFAULT 'other',
 heading varchar(50),
 brief varchar(100),
 fullblog varchar(2000),
-likes int(8),
-dislike int(8)
+likes int(8) DEFAULT 0,
+dislike int(8) DEFAULT 0
 )
 ";
 
@@ -81,7 +97,7 @@ if ($conn->query($sql) === TRUE) {
 $sql = "CREATE TABLE comment(
 id INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 uname VARCHAR(30) NOT NULL,
-heading varchar(50),
+userid INT(6),
 comment varchar(100),
 commentdate timestamp
 )
@@ -97,7 +113,7 @@ if ($conn->query($sql) === TRUE) {
 $sql = "CREATE TABLE reply(
 id INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 uname VARCHAR(30) NOT NULL,
-heading varchar(50),
+userid INT(6),
 reply varchar(100),
 commentid int(3)
 )
@@ -105,22 +121,6 @@ commentid int(3)
 
 if ($conn->query($sql) === TRUE) {
     echo "Table reply created successfully";
-    echo "</br>";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
-
-$sql = "CREATE TABLE activeuser(
-id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-email VARCHAR(30) NOT NULL,
-password varchar(50),
-hash varchar(32),
-active int(1) DEFAULT '0'
-)
-";
-
-if ($conn->query($sql) === TRUE) {
-    echo "Table active created successfully";
     echo "</br>";
 } else {
     echo "Error creating table: " . $conn->error;

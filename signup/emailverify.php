@@ -31,12 +31,12 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
     // Verify data
     $email = mysql_escape_string($_GET['email']); // Set email variable
     $hash = mysql_escape_string($_GET['hash']); // Set hash variable
-    $search = mysql_query("SELECT email, hash, active FROM activeuser WHERE email='".$email."' AND hash='".$hash."' AND active='0'") or die(mysql_error()); 
+    $search = mysql_query("SELECT email, hash, isactive FROM user WHERE email='".$email."' AND hash='".$hash."' AND isactive='0'") or die(mysql_error()); 
 	$match  = mysql_num_rows($search);
 	echo $match;
 	if($match > 0){
         // We have a match, activate the account
-        mysql_query("UPDATE activeuser SET active='1' WHERE email='".$email."' AND hash='".$hash."' AND active='0'") or die(mysql_error());
+        mysql_query("UPDATE user SET isactive='1' WHERE email='".$email."' AND hash='".$hash."' AND isactive='0'") or die(mysql_error());
         $message = "Your account has been activated, you can now login";
     }else{
         // No match -> invalid url or account has already been activated.

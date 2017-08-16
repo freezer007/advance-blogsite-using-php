@@ -25,6 +25,60 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //web-fonts -->
 </head>
 <body>
+<script>  
+	function validateform(){    
+	var pass=document.forms["myform"]["pass"].value;
+	var repass = document.forms["myform"]["repass"].value;
+	var Gender = document.forms["myform"]["Gender"].value;
+	var Country = document.forms["myform"]["Country"].value;
+	var len = pass.length;
+	var x=document.forms["myform"]["Email"].value;  
+	var atposition=x.indexOf("@");  
+	var dotposition=x.lastIndexOf(".");  
+	if (atposition<1 || dotposition<atposition+2 || dotposition+2>=x.length){  
+	    document.forms["myform"]["Email"].value="";
+	    document.forms["myform"]["Email"].placeholder = "Invailid Email";
+	    document.forms["myform"]["Email"].focus();
+	    return false;
+	}
+	if(pass != repass || len<8)
+	{
+		document.forms["myform"]["pass"].value="";
+	    document.forms["myform"]["pass"].placeholder = "Password is not same or length is < 8";
+	    document.forms["myform"]["repass"].value="";
+	    document.forms["myform"]["repass"].placeholder = "Password is not same or length is < 8";
+		document.forms["myform"]["pass"].focus();
+		return false;
+	}
+	if(bdate )
+	if(Country != "india")
+	{
+		document.forms["myform"]["Country"].value="";
+	    document.forms["myform"]["Country"].placeholder = "Only india is vailid";
+		document.forms["myform"]["Country"].focus();
+		return false;
+	}
+	if(Gender != "M")
+	{
+		if(Gender != "F")
+		{
+			document.forms["myform"]["Gender"].value="";
+	   		document.forms["myform"]["Gender"].placeholder = "use M/F in Gender";
+			document.forms["myform"]["Gender"].focus();
+			return false;
+		}
+	}
+	var bdate = document.forms["myform"]["bdate"].value;
+    var data = bdate.split("/");
+    // using ISO 8601 Date String
+    if (isNaN(Date.parse(data[2] + "-" + data[1] + "-" + data[0]))) {
+    	document.forms["myform"]["bdate"].value="";
+	   	document.forms["myform"]["bdate"].placeholder = "use DD/MM/YYYY Formate in DOB";
+		document.forms["myform"]["bdate"].focus();
+        return false;
+    }
+}
+</script>
 		<!--header-->
 		<div class="header-w3l">
 			<h1>Stylish Signup Form</h1>
@@ -35,18 +89,25 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 	           <!--form-stars-here-->
 						<div class="wthree-form">
 							<h2>Fill out the form below to Signup</h2>
-							<form action="verify.php" method="post">
-								<div class="form-sub-w3">
-									<input type="text" name="Email" placeholder="Email " required="" />
-								</div>
+							<form name="myform" action="verify.php" method="post" onsubmit="return validateform()" >
 								<div class="form-sub-w3">
 									<input type="text" name="Username" placeholder="Username " required="" />
 								</div>
 								<div class="form-sub-w3">
-									<input type="text" name="Date" placeholder="BirthDate (DD/MM/YYYY)" required="" />
+									<input type="text" name="Email" placeholder="Email " required="" />
 								</div>
 								<div class="form-sub-w3">
-									<input type="text" name="Gender" placeholder="Gender(M/F)" required="" />>
+									<input type="password" name="pass" placeholder="Enter Password " required="" />
+								</div>
+								<div class="form-sub-w3">
+									<input type="password" name="repass" placeholder="ReEnter Password " required="" />
+								</div>	
+								<div class="form-sub-w3">
+									<input type="text" name="bdate" placeholder="BirthDate (DD/MM/YYYY)" required="" />
+								</div>
+								<div class="form-sub-w3">
+									<input type="text" name="Gender" placeholder="Gender(M/F)" required="" />
+								</div>
 								<div class="form-sub-w3">
 									<input type="text" name="Country" placeholder="Contry" required="" />
 								<div class="clear"></div>
