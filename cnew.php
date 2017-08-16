@@ -24,6 +24,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
+	<script>  
+	function validateform(){        
+	var title=document.forms["myform"]["title"].value;
+	if(title.length == 0 || title.length > 5)  
+      {
+      	document.forms["myform"]["title"].focus();
+        return false;      
+      }
+    var title=document.forms["myform"]["description"].value;
+	if(title.length == 0 || title.length > 200)  
+      {
+      	document.forms["myform"]["description"].focus();
+        return false;      
+      }  
+    var title=document.forms["myform"]["editor1"].value;
+	if(title.length == 0 || title.length > 2000)  
+      {
+      	document.forms["myform"]["editor1"].focus();
+        return false;      
+      }  
+	return true;
+}
+</script>
 		<!---start-wrap---->
 		<div class="wrap">
 		<!---strat-header---->
@@ -48,16 +71,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---//End-header---->
 		<!---start-content---->
 		<!---start-blog-sinle-page---->
+		<form name="myform" action="blog.php" method="post" onsubmit="return validateform()"> 
+
 			<div class="blog-single">
 				<div class="wrap"> 
 					<div class="blog-single-header">
+						<input type="text" name="title" placeholder="Enter title for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="50" required=""><br></br>
+						<textarea name="description" rows="3" placeholder="Enter a litle description for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="200" required=""></textarea>
 						<h3><a href="#">Create a new Post in My awesome editor</a></h3>
 					</div>
 				</div>
 			</div>
 			<script src="ckeditor/ckeditor.js"></script>
-			<form action="#" method="post">
-			<textarea name="editor1" height="100%"></textarea>
+			<textarea name="editor1" height="100%" maxlength="2000" required=""></textarea>
 			<input type="submit" name="blog" style="    float: left;position: relative;left: 45%;background: #86C840;font-family: 'Open Sans', sans-serif;font-size: 0.9em;color: #FFF;border: 1.2px solid rgba(168, 168, 168, 0.33);border-radius: 0.2em;outline:none;transition:0.5s all;-webkit-transition:0.5s all;-moz-transition:0.5s all;-o-transition:0.5s all;border: none;cursor: pointer;padding:.7em 1.6em" value="SUBMIT">
 			<br><br>
 			</form>
