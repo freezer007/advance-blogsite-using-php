@@ -118,10 +118,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<ul id="filters" class="clearfix">
 				<div class="wrap"> 
 						<li><span class="filter active" data-filter="app card icon logo web">All</span></li>
-						<li><span class="filter" data-filter="app">App</span></li>
-						<li><span class="filter" data-filter="card">Design</span></li>
 						<li><span class="filter" data-filter="icon">Mobile</span></li>
 						<li><span class="filter" data-filter="web">Technology</span></li>
+						<li><span class="filter" data-filter="web">Study</span></li>
+						<li><span class="filter" data-filter="web">Other</span></li>
 						<div class="clear"> </div>
 				</div>
 			</ul>

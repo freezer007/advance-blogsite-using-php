@@ -22,12 +22,52 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<link rel="shortcut icon" type="image/x-icon" href="images/fave-icon.png" />
 	    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 	   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style>
+/* The Modal (background) */
+div.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+div.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+span.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+span.close:hover,
+span.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
 	</head>
 	<body>
 	<script>  
 	function validateform(){        
 	var title=document.forms["myform"]["title"].value;
-	if(title.length == 0 || title.length > 5)  
+	if(title.length == 0 || title.length > 50)  
       {
       	document.forms["myform"]["title"].focus();
         return false;      
@@ -43,8 +83,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       {
       	document.forms["myform"]["editor1"].focus();
         return false;      
-      }  
+      } 
+     var title = document.forms["myform"]["img"].src;
+     document.forms["myform"]["image"].value = title;
 	return true;
+}
+function changeurl()
+{
+	var url=document.getElementById('urlb').value;
+	document.forms["myform"]["img"].src = url;
+	document.forms["myform"]["editor1"].focus();
 }
 </script>
 		<!---start-wrap---->
@@ -71,12 +119,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---//End-header---->
 		<!---start-content---->
 		<!---start-blog-sinle-page---->
-		<form name="myform" action="blog.php" method="post" onsubmit="return validateform()"> 
+		<form name="myform" action="blogsubmit.php" method="post" onsubmit="return validateform()"> 
 
+				<!-- The Modal -->
 			<div class="blog-single">
 				<div class="wrap"> 
 					<div class="blog-single-header">
+						<a href="#"><img src="images/userpic.png" id="myBtn" name="img" width="30%" height="50%"><br></a>
 						<input type="text" name="title" placeholder="Enter title for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="50" required=""><br></br>
+						<input type="hidden" name="image">
 						<textarea name="description" rows="3" placeholder="Enter a litle description for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="200" required=""></textarea>
 						<h3><a href="#">Create a new Post in My awesome editor</a></h3>
 					</div>
@@ -87,10 +138,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<input type="submit" name="blog" style="    float: left;position: relative;left: 45%;background: #86C840;font-family: 'Open Sans', sans-serif;font-size: 0.9em;color: #FFF;border: 1.2px solid rgba(168, 168, 168, 0.33);border-radius: 0.2em;outline:none;transition:0.5s all;-webkit-transition:0.5s all;-moz-transition:0.5s all;-o-transition:0.5s all;border: none;cursor: pointer;padding:.7em 1.6em" value="SUBMIT">
 			<br><br>
 			</form>
+			<div id="myModal" class="modal">
+					  <!-- Modal content -->
+				  <div class="modal-content">
+				    <span class="close">&times;</span>
+				    Enter Url for image  :<input type="text" id="urlb" style="width: 60%;height: 5%;font-size: 16px;"><br>
+				    <input type="button" name="send" style=" border: 1px solid;background-color: #33333;width: 100%;height: 5%;font-size: 16px;font-color: #111111" value="change image" onclick="changeurl()">
+				  </div>
+
+			</div>
 			<script>
             CKEDITOR.replace( 'editor1' );
         	</script>
 		<!---//End-blog-sinle-page---->
+
 		<div class="bottom-grids">
 			<div class="wrap"> 
 			<div class="bottom-grid-left">
@@ -166,6 +227,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---//End-footer---->
 		<!---//End-wrap---->
 		 </div>
+		 <script>
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 	</body>
 </html>
 
