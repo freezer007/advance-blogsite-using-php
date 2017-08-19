@@ -27,6 +27,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</script>
 	</head>
 	<body>
+		<?php 
+// get blogs
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "god";
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<br> id: ". $row["id"]. " - Name: ". $row["firstname"]. " " . $row["lastname"] . "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+$sql = "SELECT id, uname, blogdate,imsrc,heading,brief,likes,dislikes FROM blog";
+$result = $conn->query($sql);
+
+
+$conn->close();
+?>
 <?php
 // Set session variables
 	// define variables and set to empty values
@@ -114,36 +141,9 @@ if ($_SESSION["eml"] != "")
 					<h3>Latest News</h3>
 					<p>Find out What's Going On</p>
 				</div>
-			<div class="clear"> </div>		
-			<?php 
-				$servername = "localhost";
-				$username = "root";
-				$password = "";
-				$dbname = "god";
-				$conn = new mysqli($servername, $username, $password, $dbname);
-				// Check connection
-				if ($conn->connect_error) {
-				    die("Connection failed: " . $conn->connect_error);
-				} 
-
-				$sql = "SELECT id, uname, blogdate,imsrc,heading,brief,likes,dislikes FROM blog";
-				$result = $conn->query($sql);
-
-				while($row = mysqli_fetch_assoc($result)) {
-				        $id = $row["id"];
-				        $name = $row["uname"];
-				        $date = $row["blogdate"];
-				        $src = $row["imsrc"];
-				        $heading = $row["heading"];
-				        $brief = $row["brief"];
-				        $likes = $row["likes"];
-				        $dislikes = $row["dislikes"];
-				        echo "id";
-				        	}
-
-			$conn->close();
-			?>
-			<div class="blog-articla-grid">
+			<div class="clear"> </div>
+			<div class="blog-articla-grids">
+				<div class="blog-articla-grid">
 					<div class="blog-articla-grid-pic">
 						<a href="bsingle.php"><img src="images/artpic1.png" alt=" " /></a>
 					</div>
@@ -160,9 +160,46 @@ if ($_SESSION["eml"] != "")
 						</ul>
 					</div>
 					<div class="clear"> </div>
+				</div>
+				<div class="blog-articla-grid">
+					<div class="blog-articla-grid-pic">
+						<a href="bsingle.php"><img src="images/artpic2.png" alt=" " /></a>
+					</div>
+					<div class="blog-articla-grid-info">
+						<h3><a href="#">sed do eiusmod tempor incididunt ut labo</a></h3>
+						<ul>
+							<li><p>post on <a href="bsingle.php">July 28,2013</a></p></li>
+							<li><a href="bsingle.php"> James Reed</a></li>
+							<li><a href="bsingle.php"> Technology</a></li>
+							<p class="artical-para">
+								consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+							</p>
+							<a class="artbtn" href="bsingle.php">Read More</a>
+						</ul>
+					</div>
+					<div class="clear"> </div>
+				</div>
+				<div class="blog-articla-grid">
+					<div class="blog-articla-grid-pic">
+						<a href="bsingle.php"><img src="images/artpic3.png" alt=" " /></a>
+					</div>
+					<div class="blog-articla-grid-info">
+						<h3><a href="bsingle.php">incididunt ut labore et dolore magna</a></h3>
+						<ul>
+							<li><p>post on <a href="#">July 28,2013</a></p></li>
+							<li><a href="bsingle.php"> James Reed</a></li>
+							<li><a href="bsingle.php"> Technology</a></li>
+							<p class="artical-para">
+								consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+							</p>
+							<a class="artbtn" href="bsingle.php">Read More</a>
+						</ul>
+					</div>
+					<div class="clear"> </div>
+				</div>
+				
 			</div>
-			<?php
-			?>
+			</div>
 		</div>
 		<!---//End-articls---->
 		<div class="bottom-grids">
