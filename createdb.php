@@ -79,10 +79,10 @@ id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 uname VARCHAR(30) NOT NULL,
 blogdate timestamp DEFAULT CURRENT_TIMESTAMP,
 gener varchar(20) DEFAULT 'other',
-imsrc varchar(200) DEFAULT 'images/userpic.png',
+imsrc varchar(20000) DEFAULT 'images/userpic.png',
 heading varchar(50),
-brief varchar(200),
-fullblog varchar(2000),
+brief varchar(500),
+fullblog varchar(20000),
 likes int(8) DEFAULT 0,
 dislike int(8) DEFAULT 0
 )

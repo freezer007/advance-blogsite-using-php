@@ -49,7 +49,7 @@ if ($_SESSION["eml"] != "")
     <ul id="main-menu">
        <li><a href="index.php"> <span> </span></a></li>
         <li class="active"><a href="index.php">Home</a></li>
-        <li><a href="blog.php">Blog</a></li>
+        <li><a href="blog.php?page=1">Blog</a></li>
         <li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
         <li><a href="about.php">About us</a></li>
         <li><a href="signup/change.php">Change pasword</a></li>

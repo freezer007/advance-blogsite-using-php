@@ -106,7 +106,7 @@ function changeurl()
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php">Blog</a></li>
+					<li><a href="blog.php?page=1">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -128,13 +128,19 @@ function changeurl()
 						<a href="#"><img src="images/userpic.png" id="myBtn" name="img" width="30%" height="50%"><br></a>
 						<input type="text" name="title" placeholder="Enter title for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="50" required=""><br></br>
 						<input type="hidden" name="image">
-						<textarea name="description" rows="3" placeholder="Enter a litle description for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="200" required=""></textarea>
+						<textarea name="description" rows="3" placeholder="Enter a litle description for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="500" required=""></textarea><br><br>
+						Select a catagory:-<select name="catagory" width="60%">
+						  <option>Other</option>
+						  <option>Technology</option>
+						  <option>Mobile</option>
+						  <option>Study</option>
+						</select>
 						<h3><a href="#">Create a new Post in My awesome editor</a></h3>
 					</div>
 				</div>
 			</div>
 			<script src="ckeditor/ckeditor.js"></script>
-			<textarea name="editor1" height="100%" maxlength="2000" required=""></textarea>
+			<textarea name="editor1" height="100%" maxlength="20000" required=""></textarea>
 			<input type="submit" name="blog" style="    float: left;position: relative;left: 45%;background: #86C840;font-family: 'Open Sans', sans-serif;font-size: 0.9em;color: #FFF;border: 1.2px solid rgba(168, 168, 168, 0.33);border-radius: 0.2em;outline:none;transition:0.5s all;-webkit-transition:0.5s all;-moz-transition:0.5s all;-o-transition:0.5s all;border: none;cursor: pointer;padding:.7em 1.6em" value="SUBMIT">
 			<br><br>
 			</form>
@@ -204,7 +210,7 @@ function changeurl()
 					<ul>
 						<li><a href="index.php">Home</a></li>
 						<li><a href="about.php">About</a></li>
-						<li><a href="blog.php">Archive</a></li>
+						<li><a href="blog.php?page=1">Archive</a></li>
 						<li><a href="contact.php">Contact</a></li>
 						<div class="clear"> </div>
 					</ul>

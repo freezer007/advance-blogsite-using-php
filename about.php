@@ -50,7 +50,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php">Blog</a></li>
+					<li><a href="blog.php?page=1">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li class="active"><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -148,7 +148,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<ul>
 						<li><a href="index.php">Home</a></li>
 						<li><a href="about.php">About</a></li>
-						<li><a href="blog.php">Archive</a></li>
+						<li><a href="blog.php?page=1">Archive</a></li>
 						<li><a href="contact.php">Contact</a></li>
 						<div class="clear"> </div>
 					</ul>

@@ -15,10 +15,11 @@ $heading = $_POST["title"];
 $brief = $_POST["description"];
 $fullblog = $_POST["editor1"];
 $imsrc = $_POST["image"];
+$gener = $_POST["catagory"];
 echo $fullblog;
 
-$sql = "INSERT INTO blog (uname, imsrc, heading ,brief ,fullblog)
-        VALUES ('Admin','".$imsrc."','".$heading."','".$brief."','".$fullblog."')";
+$sql = "INSERT INTO blog (uname, gener, imsrc, heading ,brief ,fullblog)
+        VALUES ('Admin','".$gener."','".$imsrc."','".$heading."','".$brief."','".$fullblog."')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -28,6 +29,6 @@ if ($conn->query($sql) === TRUE) {
 
 echo "sucess";
 $conn->close();
-@header("Location:/blog.php");
-//@header("Location:http://lemonlight.cf/blog.php");
+@header("Location:/blog.php?page=1");
+//@header("Location:http://lemonlight.cf/blog.php?page=1");
 ?>

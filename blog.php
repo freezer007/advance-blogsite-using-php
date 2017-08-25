@@ -85,6 +85,38 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<!---//start-blog---->
 	</head>
 	<body>
+	<?php 
+	$gen = $_GET["gener"];
+	$op1 = "filter";
+	$op2 = "filter";
+	$op3 = "filter";
+	$op4 = "filter";
+	if($gen == "")
+	{
+		$gen1 = "Mobile";
+		$op1 = "filter active";
+	}
+	else
+	{
+		$gen1 = $gen;
+	}
+	if($gen1 == "Mobile")
+	{
+		$op1 = "filter active";
+	}
+	if($gen1 == "Technology")
+	{
+		$op2 = "filter active";
+	}
+	if($gen1 == "Study")
+	{
+		$op3 = "filter active";
+	}
+	if($gen1 == "Other")
+	{
+		$op4 = "filter active";
+	}
+	?>
 		<!---start-wrap---->
 		<div class="wrap">
 		<!---strat-header---->
@@ -96,7 +128,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li><a href="index.php">Home</a></li>
-					<li  class="active"><a href="blog.php">Blog</a></li>
+					<li  class="active"><a href="blog.php?page=1">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -117,82 +149,90 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<ul id="filters" class="clearfix">
 				<div class="wrap"> 
-						<li><span class="filter active" data-filter="app card icon logo web">All</span></li>
-						<li><span class="filter" data-filter="icon">Mobile</span></li>
-						<li><span class="filter" data-filter="web">Technology</span></li>
-						<li><span class="filter" data-filter="web">Study</span></li>
-						<li><span class="filter" data-filter="web">Other</span></li>
+						<li><a href="blog.php?page=1&gener=Mobile"><span class="<?php echo $op1;?>" data-filter="icon">Mobile</span></a></li>
+						<li><a href="blog.php?page=1&gener=Technology"><span class="<?php echo $op2;?>" data-filter="web">Technology</span></a></li>
+						<li><a href="blog.php?page=1&gener=Study"><span class="<?php echo $op3;?>" data-filter="app card icon logo web">Study</span></a></li>
+						<li><a href="blog.php?page=1&gener=Other"><span class="<?php echo $op4;?>" data-filter="web2">Other</span></a></li>
 						<div class="clear"> </div>
 				</div>
 			</ul>
 			<div class="wrap"> 
 			<div class="blog-grids" id="portfoliolist">
-				<div class="blog-articla-grid  portfolio1 logo1" data-cat="logo">
-					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php"><img src="images/artpic2.png" alt=" "></a>
-					</div>
-					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php">Lorem ipsum dolor sit amet adipisicing elit?</a></h3>
-						<ul>
-							<li><p>post on <a href="bsingle.php">July 28,2013</a></p></li>
-							<li><a href="bsingle.php"> James Reed</a></li>
-							<li><a href="bsingle.php"> Technology</a></li>
-							<p class="artical-para">
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-							</p>
-							<a class="artbtn" href="bsingle.php">Read More</a>
-						</ul>
-					</div>
-					<div class="clear"> </div>
-				</div>
+			<?php 
+				$servername = "localhost";
+				$username = "root";
+				$password = "";
+				$dbname = "god";
+				$conn = new mysqli($servername, $username, $password, $dbname);
+				// Check connection
+				if ($conn->connect_error) {
+				    die("Connection failed: " . $conn->connect_error);
+				} 
+				$page = $_GET["page"];
+				if($page == "" || $page == "1")
+				{
+					$page1 = 0;
+				}
+				else
+				{
+					$page1 = ($page*5) - 5;
+				}
+				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief,likes,dislike FROM blog WHERE gener ='".$gen1."' ORDER BY blogdate DESC limit $page1,5";
+				$result = $conn->query($sql) or die($conn->error);
+				$n = 5;
+				while($row = $result->fetch_assoc() and $n>0) {
+				        $id = $row["id"];
+				        $name = $row["uname"];
+				        $gener = $row["gener"];
+				        $date = $row["blogdate"];
+				        $src = $row["imsrc"];
+				        $heading = $row["heading"];
+				        $brief = $row["brief"];
+				        $likes = $row["likes"];
+				        $dislikes = $row["dislike"];
+				        $n = $n-1?>
 				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
 					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php"><img src="images/artpic1.png" alt=" "></a>
+						<a href="bsingle.php"><img src="<?php echo $src; ?>" alt=" "></a>
 					</div>
 					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php">Sed do eiusmod tempor incididunt ut labore et</a></h3>
+						<h3><a href="bsingle.php"><?php echo $heading; ?></a></h3>
 						<ul>
-							<li><p>post on <a href="bsingle.php">July 28,2013</a></p></li>
-							<li><a href="bsingle.php"> James Reed</a></li>
-							<li><a href="bsingle.php"> Technology</a></li>
-							<p class="artical-para">
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+							<li><p>post on <a href="bsingle.php"><?php echo $date; ?></a></p></li>
+							<li><a href="bsingle.php"><?php echo $name; ?></a></li>
+							<li><a href="bsingle.php"><?php echo $gener; ?></a></li>
+							<p class="artical-para"><?php echo $brief; ?>
 							</p>
 							<a class="artbtn" href="bsingle.php">Read More</a>
 						</ul>
 					</div>
 					<div class="clear"> </div>
 				</div>
-				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
-					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php"><img src="images/artpic3.png" alt=" "></a>
-					</div>
-					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php">Lorem ipsum dolor sit amet adipisicing elit?</a></h3>
-						<ul>
-							<li><p>post on <a href="bsingle.php">July 28,2013</a></p></li>
-							<li><a href="bsingle.php"> James Reed</a></li>
-							<li><a href="bsingle.php"> Technology</a></li>
-							<p class="artical-para">
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-							</p>
-							<a class="artbtn" href="bsingle.php">Read More</a>
-						</ul>
-					</div>
-					<div class="clear"> </div>
-				</div>
-				
 				<div class="clear"> </div>
+			<?php
+			 	}
+			?>
+			</div>
 			</div>
 			<div class="clear"> </div>
 			<div class="icons-pagenate">
 				<ul>
+				<?php 
+					$sql = "SELECT * FROM blog";
+					$res = $conn->query($sql) or die($conn->error);
+					$noofrows = $res->num_rows;
+					$noofrows = $noofrows/5;
+					$a = ceil($noofrows);
+					for($b=1;$b<=$a;$b++)
+					{
+						?>
 					<li><a class="frist-page" href="#"> </a></li>
-					<li><a href="#">1 </a></li>
-					<li><a href="#">2 </a></li>
-					<li><a href="#">3 </a></li>
-					<li><a href="#">4 </a></li>
+					<li><a href="blog.php?page=<?php echo $b;?>"><?php echo $b;?></a></li>
 					<li><a class="last-page" href="#"> </a></li>
+				<?php
+					}
+				$conn->close();
+				?>
 					<div class="clear"> </div>
 				</ul>
 			</div>
@@ -252,7 +292,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<ul>
 						<li><a href="index.php">Home</a></li>
 						<li><a href="about.php">About</a></li>
-						<li><a href="blog.php">Archive</a></li>
+						<li><a href="blog.php?page=1">Archive</a></li>
 						<li><a href="contact.php">Contact</a></li>
 						<div class="clear"> </div>
 					</ul>

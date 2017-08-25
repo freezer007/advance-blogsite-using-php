@@ -70,7 +70,7 @@ if ($_SESSION["eml"] != "")
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li class="active"><a href="index.php">Home</a></li>
-					<li><a href="blog.php">Blog</a></li>
+					<li><a href="blog.php?page=1">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -126,44 +126,44 @@ if ($_SESSION["eml"] != "")
 				    die("Connection failed: " . $conn->connect_error);
 				} 
 
-				$sql = "SELECT id, uname, blogdate,imsrc,heading,brief,likes,dislikes FROM blog";
-				$result = $conn->query($sql);
-
-				while($row = mysqli_fetch_assoc($result)) {
+				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief,likes,dislike FROM blog ORDER BY blogdate DESC ";
+				$result = $conn->query($sql) or die($conn->error);
+				$n = 5;
+				while($row = $result->fetch_assoc() and $n>0) {
 				        $id = $row["id"];
 				        $name = $row["uname"];
+				        $gener = $row["gener"];
 				        $date = $row["blogdate"];
 				        $src = $row["imsrc"];
 				        $heading = $row["heading"];
 				        $brief = $row["brief"];
 				        $likes = $row["likes"];
-				        $dislikes = $row["dislikes"];
-				        echo "id";
-				        	}
-
-			$conn->close();
-			?>
+				        $dislikes = $row["dislike"];
+				        $n = $n-1?>
 			<div class="blog-articla-grid">
 					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php"><img src="images/artpic1.png" alt=" " /></a>
+						<a href="bsingle.php"><img src="<?php echo $src; ?>" alt=" " /></a>
 					</div>
 					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php">Lorem ipsum dolor sit amet adipisicing elit?</a></h3>
+						<h3><a href="bsingle.php"><?php echo $heading;?></a></h3>
 						<ul>
-							<li><p>post on <a href="bsingle.php">July 28,2013</a></p></li>
-							<li><a href="bsingle.php"> James Reed</a></li>
-							<li><a href="bsingle.php"> Technology</a></li>
-							<p class="artical-para">
-								consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+							<li><p>post on <a href="bsingle.php"><?php echo $date; ?></a></p></li>
+							<li><a href="bsingle.php"> By <?php echo $name; ?></a></li>
+							<li><a href="bsingle.php">catagory :-<?php echo $gener; ?></a></li>
+							<p class="artical-para"><?php echo $brief; ?>
 							</p>
 							<a class="artbtn" href="bsingle.php">Read More</a>
 						</ul>
 					</div>
 					<div class="clear"> </div>
 			</div>
+
+
 			<?php
+				        	}
+
+			$conn->close();
 			?>
-		</div>
 		<!---//End-articls---->
 		<div class="bottom-grids">
 			<div class="wrap"> 
