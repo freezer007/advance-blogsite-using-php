@@ -177,7 +177,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				{
 					$page1 = ($page*5) - 5;
 				}
-				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief,likes,dislike FROM blog WHERE gener ='".$gen1."' ORDER BY blogdate DESC limit $page1,5";
+				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief FROM blog WHERE gener ='".$gen1."' ORDER BY blogdate DESC limit $page1,5";
 				$result = $conn->query($sql) or die($conn->error);
 				$n = 5;
 				while($row = $result->fetch_assoc() and $n>0) {
@@ -188,22 +188,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        $src = $row["imsrc"];
 				        $heading = $row["heading"];
 				        $brief = $row["brief"];
-				        $likes = $row["likes"];
-				        $dislikes = $row["dislike"];
 				        $n = $n-1?>
 				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
 					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php"><img src="<?php echo $src; ?>" alt=" "></a>
+						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" alt=" "></a>
 					</div>
 					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php"><?php echo $heading; ?></a></h3>
+						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading; ?></a></h3>
 						<ul>
-							<li><p>post on <a href="bsingle.php"><?php echo $date; ?></a></p></li>
+							<li><p>post on<?php echo $date; ?></p></li>
 							<li><a href="bsingle.php"><?php echo $name; ?></a></li>
-							<li><a href="bsingle.php"><?php echo $gener; ?></a></li>
+							<li><a href="blog.php?page=<?php echo $gener;?>"><?php echo $gener; ?></a></li>
 							<p class="artical-para"><?php echo $brief; ?>
 							</p>
-							<a class="artbtn" href="bsingle.php">Read More</a>
+							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Read More</a>
 						</ul>
 					</div>
 					<div class="clear"> </div>

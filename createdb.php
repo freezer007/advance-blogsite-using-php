@@ -82,9 +82,7 @@ gener varchar(20) DEFAULT 'other',
 imsrc varchar(20000) DEFAULT 'images/userpic.png',
 heading varchar(50),
 brief varchar(500),
-fullblog varchar(20000),
-likes int(8) DEFAULT 0,
-dislike int(8) DEFAULT 0
+fullblog varchar(20000)
 )
 ";
 
@@ -99,8 +97,9 @@ $sql = "CREATE TABLE comment(
 id INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 uname VARCHAR(30) NOT NULL,
 userid INT(6),
+blogid INT(8),
 comment varchar(100),
-commentdate timestamp
+commentdate timestamp DEFAULT CURRENT_TIMESTAMP
 )
 ";
 
@@ -116,6 +115,7 @@ id INT(3) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 uname VARCHAR(30) NOT NULL,
 userid INT(6),
 reply varchar(100),
+replydate timestamp DEFAULT CURRENT_TIMESTAMP,
 commentid int(3)
 )
 ";
@@ -126,6 +126,22 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error creating table: " . $conn->error;
 }
+
+$sql = "CREATE TABLE likes(
+id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+bloggerid INT(6),
+blogid INT(6),
+choise varchar(10)
+)
+";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Table likes created successfully";
+    echo "</br>";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
+
 
 $conn->close();
 ?> 

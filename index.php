@@ -70,7 +70,7 @@ if ($_SESSION["eml"] != "")
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li class="active"><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1">Blog</a></li>
+					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -126,7 +126,7 @@ if ($_SESSION["eml"] != "")
 				    die("Connection failed: " . $conn->connect_error);
 				} 
 
-				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief,likes,dislike FROM blog ORDER BY blogdate DESC ";
+				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief FROM blog ORDER BY blogdate DESC ";
 				$result = $conn->query($sql) or die($conn->error);
 				$n = 5;
 				while($row = $result->fetch_assoc() and $n>0) {
@@ -137,22 +137,20 @@ if ($_SESSION["eml"] != "")
 				        $src = $row["imsrc"];
 				        $heading = $row["heading"];
 				        $brief = $row["brief"];
-				        $likes = $row["likes"];
-				        $dislikes = $row["dislike"];
 				        $n = $n-1?>
 			<div class="blog-articla-grid">
 					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php"><img src="<?php echo $src; ?>" alt=" " /></a>
+						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" alt=" " /></a>
 					</div>
 					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php"><?php echo $heading;?></a></h3>
+						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading;?></a></h3>
 						<ul>
-							<li><p>post on <a href="bsingle.php"><?php echo $date; ?></a></p></li>
+							<li><p>post on <?php echo $date; ?></p></li>
 							<li><a href="bsingle.php"> By <?php echo $name; ?></a></li>
-							<li><a href="bsingle.php">catagory :-<?php echo $gener; ?></a></li>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">catagory :-<?php echo $gener; ?></a></li>
 							<p class="artical-para"><?php echo $brief; ?>
 							</p>
-							<a class="artbtn" href="bsingle.php">Read More</a>
+							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Read More</a>
 						</ul>
 					</div>
 					<div class="clear"> </div>

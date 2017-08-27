@@ -133,85 +133,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<hr/>
 						<div class="artical-comments">
 							<h2>Comments</h2>
-							<?php 
-							$servername = "localhost";
-							$username = "root";
-							$password = "";
-							$dbname = "god";
-							$conn = new mysqli($servername, $username, $password, $dbname);
-							// Check connection
-							if ($conn->connect_error) {
-							    die("Connection failed: " . $conn->connect_error);
-							} 
-
-							$sql = "SELECT * FROM comment where blogid = '".$page1."' ORDER BY commentdate DESC ";
-							$result = $conn->query($sql) or die($conn->error);
-							while($row = $result->fetch_assoc()) {
-									$cid = $row["id"];
-							        $name = $row["uname"];
-							        $commendate = $row["commentdate"];
-							        $commen = $row["comment"];
-							        ?>
 							<div class="artical-comment-grid">
 								<div class="artical-comment-grid-left">
 									<a href="#"><img src="images/commenter-pic1.png"  alt="" /></a>
 								</div>
 								<div class="artical-comment-grid-right">
-									<h4><a href="#"><?php echo $name; ?></a></h4>
-									<span><a href="#"><?php echo $commendate; ?></a></span>
-									<p><?php echo $commen; ?></p>
-									<div id="makeithidden<?php echo $cid?>" style="">
-									<a class="comment-replay" href="#" onclick="return runMyFunction(<?php echo $cid?>);">Click to Replay</a>
-									</div>
-									<div class="leave-comment-form">
-									<div class="leve-comment">
-									<form id="replyform<?php echo $cid?>" action="bsinglereply.php" method="post" style="height: 0px;width: 0px;overflow:hidden;">
-									<textarea name="areply" maxlength="100">Enter reply..</textarea>
-									<input type="hidden" name="uname" value="admin">
-									<input type="hidden" name="usrid" value="1">
-									<input type="hidden" name="cid" value="<?php echo $cid;?>">
-									<input type="hidden" name="bloid" value="<?php echo $page1;?>">
-									<input type="submit" value="Post-reply" />
-									</form>
-									</div></div>
+									<h4><a href="#">Uku Mason</a></h4>
+									<span><a href="#">June 12,2013</a> - 12:50 AM</span>
+									<p>Passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't?</p>
+									<a class="comment-replay" href="#">Click to Replay</a>
 								</div>
 								<div class="clear"> </div>
 							</div>
-							<?php
-							$servername = "localhost";
-							$username = "root";
-							$password = "";
-							$dbname = "god";
-							$conn = new mysqli($servername, $username, $password, $dbname);
-							// Check connection
-							if ($conn->connect_error) {
-							    die("Connection failed: " . $conn->connect_error);
-							} 
-
-							$sql = "SELECT * FROM reply where commentid = '".$cid."' ORDER BY reply DESC ";
-							$result2 = $conn->query($sql) or die($conn->error);
-							while($row = $result2->fetch_assoc()) {
-							        $name = $row["uname"];
-							        $repldate = $row["replydate"];
-							        $repl = $row["reply"]; 
-							?>
 							<div class="artical-comment-grid sub-comment-grid">
 								<div class="artical-comment-grid-left">
 									<a href="#"><img src="images/commenter-pic.png"  alt="" /></a>
 								</div>
 								<div class="artical-comment-grid-right">
-									<h4><a href="#"><?php echo $name; ?></a></h4>
-									<span><a href="#"><?php echo $repldate; ?></a></span>
-									<p><?php echo $repl; ?></p>
+									<h4><a href="#">Designer frist</a></h4>
+									<span><a href="#">June 12,2013</a> - 12:50 AM</span>
+									<p>Passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't?</p>
+									<a class="comment-replay" href="#">Click to Replay</a>
 								</div>
 								<div class="clear"> </div>
 							</div>
 							<div class="clear"> </div>
-							<?php
-								}
-								}
-							$conn->close();
-							?>
+							<div class="artical-comment-grid">
+								<div class="artical-comment-grid-left">
+									<a href="#"><img src="images/commenter-pic1.png"  alt="" /></a>
+								</div>
+								<div class="artical-comment-grid-right">
+									<h4><a href="#">Ro Kanth</a></h4>
+									<span><a href="#">June 12,2013</a> - 12:50 AM</span>
+									<p>Passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't?</p>
+									<a class="comment-replay" href="#">Click to Replay</a>
+								</div>
+								<div class="clear"> </div>
+							</div>
 							<div class="clear"> </div>
 						</div>
 						<div class="clear"> </div>
@@ -311,18 +269,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---//End-footer---->
 		<!---//End-wrap---->
 		 </div>
-						<script type="text/javascript">
-							function runMyFunction(x)
-							{
-								var a = "makeithidden"+x;
-								var b = "replyform"+x;
-								a = document.getElementById(a);
-								b = document.getElementById(b);
-								b.setAttribute("style","");
-								a.setAttribute("style","height: 0px;width: 0px;overflow:hidden;");
-								return false;
-							}
-						</script>
 	</body>
 </html>
 

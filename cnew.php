@@ -130,10 +130,10 @@ function changeurl()
 						<input type="hidden" name="image">
 						<textarea name="description" rows="3" placeholder="Enter a litle description for your blog" style="border: solid 5px #c9c9c9;width: 60%;height: 10%;font-size: 18px;" maxlength="500" required=""></textarea><br><br>
 						Select a catagory:-<select name="catagory" width="60%">
-						  <option>Other</option>
-						  <option>Technology</option>
 						  <option>Mobile</option>
+						  <option>Technology</option>
 						  <option>Study</option>
+						  <option>Other</option>
 						</select>
 						<h3><a href="#">Create a new Post in My awesome editor</a></h3>
 					</div>
