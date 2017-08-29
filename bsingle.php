@@ -35,7 +35,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1">Blog</a></li>
+					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -84,6 +84,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        $fullblog = $row["fullblog"];
 				    	}
 					    $conn->close();    ?>
+						<div id="makeithidden<?php echo $cid?>" style="">
+								<a class="comment-replay" href="cedit.php?id=<?php echo $id;?>" style="float: right;">Edit the blog</a>
+						</div><br>
 						<h3><a href="#"><?php echo $heading; ?></a></h3>
 						<ul>
 							<li><a href="#">posted on :-<?php echo $date; ?></a></li>
@@ -106,7 +109,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						if ($conn->connect_error) {
 						    die("Connection failed: " . $conn->connect_error);
 						} 
-						$sql = "SELECT * FROM likes where choise = 'Like'";
+						$sql = "SELECT * FROM likes where choise = true and blogid ='".$page1."'";
 						$result = $conn->query($sql) or die($conn->error);
 						$ans = $result->num_rows;
 						if($result->num_rows > 0)
@@ -117,19 +120,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						{
 							$dis = "";
 						}
-						$sql = "SELECT * FROM likes where choise = 'Dislike'";
-						$result = $conn->query($sql) or die($conn->error);
-						$ans = $result->num_rows;
-						if($result->num_rows > 0)
-						{
-							$dis2 = "";
-						}
-						else
-						{
-							$dis2 = "none";
-						}
 						$conn->close();?>
-						<a href="#" style="pointer-events: <?php echo $dis;?>;cursor: default;">like(<?php echo $ans;?>)</a><a href="#" style="float:right;pointer-events: <?php echo $dis2;?>;cursor: default;">dislike(<?php echo $ans;?>)</a>
+						<a href="addlike.php?uid=<?php echo "1"; ?>&blogid=<?php echo  $page1;?>">like(<?php echo $ans;?>)</a>
 						<hr/>
 						<div class="artical-comments">
 							<h2>Comments</h2>

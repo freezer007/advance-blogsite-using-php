@@ -50,7 +50,6 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 		document.forms["myform"]["pass"].focus();
 		return false;
 	}
-	if(bdate )
 	if(Country != "india")
 	{
 		document.forms["myform"]["Country"].value="";
@@ -68,15 +67,6 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 			return false;
 		}
 	}
-	var bdate = document.forms["myform"]["bdate"].value;
-    var data = bdate.split("/");
-    // using ISO 8601 Date String
-    if (isNaN(Date.parse(data[2] + "-" + data[1] + "-" + data[0]))) {
-    	document.forms["myform"]["bdate"].value="";
-	   	document.forms["myform"]["bdate"].placeholder = "use DD/MM/YYYY Formate in DOB";
-		document.forms["myform"]["bdate"].focus();
-        return false;
-    }
 }
 </script>
 		<!--header-->
@@ -101,9 +91,6 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 								</div>
 								<div class="form-sub-w3">
 									<input type="password" name="repass" placeholder="ReEnter Password " required="" />
-								</div>	
-								<div class="form-sub-w3">
-									<input type="text" name="bdate" placeholder="BirthDate (DD/MM/YYYY)" required="" />
 								</div>
 								<div class="form-sub-w3">
 									<input type="text" name="Gender" placeholder="Gender(M/F)" required="" />

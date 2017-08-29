@@ -46,10 +46,31 @@ if(session_id() == '' || !isset($_SESSION)) {
  	 }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $password = $_POST["password"];
-  $email = $_POST["email"];
-  $_SESSION["eml"] = $email;
-  $_SESSION["psw"] = $password;
+	$password222 = $_POST["password"];
+	$email222 = $_POST["email"];
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "god";
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	// Check connection
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+	$sql = "SELECT id,email,password FROM user where email = '".$email222."' and password = '".$password222."'";
+	$result = $conn->query($sql) or die($conn->error);
+	$ans = $result->num_rows;
+	echo $ans;
+	if($ans != 0)
+	{
+		while($row = $result->fetch_assoc()) {
+		$cid = $row["id"];
+	    $email = $row["email"];
+	    $password = $row["password"];}
+	$_SESSION["eml"] = $email;
+	$_SESSION["id"] = $cid;
+	echo $_SESSION["id"];
+	$_SESSION["psw"] = $password;}
 }
 if ($_SESSION["eml"] != "")
 {
@@ -90,8 +111,8 @@ if ($_SESSION["eml"] != "")
 				<p>We Offer high quality design resources such as fonts, icons sets,web templates,backgrounds,and much more for <span>FREE!</span></p>
 				<label>Join our mailling list & recevie a new freebie everday!</label>
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-					<input type="<?php echo $hidden ?>" class="textbox" name="email" value="Email address.." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email address..';}">
-					<input type="<?php echo $hidden ?>" class="textbox" name="password" value="Password.." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password..';}"><input type="<?php echo $hid?>" value="Login" /><br>
+					<input type="<?php echo $hidden ?>" class="textbox" name="email" placeholder="Email address.." >
+					<input type="<?php echo $hidden ?>" class="textbox" name="password" placeholder="Password.."><input type="<?php echo $hid?>" value="Login" /><br>
 					<a href="signup/forgot.php" style="<?php echo $forgot ?>"> Forgot Password</a>
 					<p <?php echo $hid?>> dont have account ? <a href="signup/">Sign up</a></p>
 				</form>
@@ -126,12 +147,14 @@ if ($_SESSION["eml"] != "")
 				    die("Connection failed: " . $conn->connect_error);
 				} 
 
-				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief FROM blog ORDER BY blogdate DESC ";
+				$sql = "SELECT * FROM blog ORDER BY blogdate DESC ";
 				$result = $conn->query($sql) or die($conn->error);
 				$n = 5;
 				while($row = $result->fetch_assoc() and $n>0) {
 				        $id = $row["id"];
+				        $creatorid = $row["userid"];
 				        $name = $row["uname"];
+				        
 				        $gener = $row["gener"];
 				        $date = $row["blogdate"];
 				        $src = $row["imsrc"];
@@ -146,7 +169,7 @@ if ($_SESSION["eml"] != "")
 						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading;?></a></h3>
 						<ul>
 							<li><p>post on <?php echo $date; ?></p></li>
-							<li><a href="bsingle.php"> By <?php echo $name; ?></a></li>
+							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>"> By <?php echo $name; ?></a></li>
 							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">catagory :-<?php echo $gener; ?></a></li>
 							<p class="artical-para"><?php echo $brief; ?>
 							</p>

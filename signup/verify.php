@@ -42,11 +42,10 @@ if ($conn->connect_error) {
 $user = $_POST["Username"];
 $email = $_POST["Email"];
 $password = $_POST["pass"];
-$bdate = $_POST["bdate"];
 $gender = $_POST["Gender"];
 $hash = md5( rand(0,1000) );
-$sql = "INSERT INTO user (uname, email, password ,isactive ,hash ,birthdate ,gender)
-        VALUES ('".$user."','".$email."','".$password."','0','".$hash."','".$bdate."','".$gender."')";
+$sql = "INSERT INTO user (uname, email, password ,isactive ,hash ,gender)
+        VALUES ('".$user."','".$email."','".$password."','0','".$hash."','".$gender."')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -55,6 +54,7 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
+/*
 require("../PHPMailer_5.2.0/class.phpmailer.php");
 
 $mail = new PHPMailer();
@@ -108,7 +108,7 @@ if(!$mail->Send())
 }
 
 echo "Message has been sent";
-
+*/
 ?>
 		<!--header-->
 		<div class="header-w3l">

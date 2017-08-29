@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -17,9 +18,13 @@ $fullblog = $_POST["editor1"];
 $imsrc = $_POST["image"];
 $gener = $_POST["catagory"];
 echo $fullblog;
-
-$sql = "INSERT INTO blog (uname, gener, imsrc, heading ,brief ,fullblog)
-        VALUES ('Admin','".$gener."','".$imsrc."','".$heading."','".$brief."','".$fullblog."')";
+$sql = "SELECT uname FROM user WHERE id ='".$_SESSION["id"]."'";
+$result = $conn->query($sql) or die($conn->error);
+while($row = $result->fetch_assoc()) {
+	       $name = $row["uname"];
+	}
+$sql = "INSERT INTO blog (uname, userid, gener, imsrc, heading ,brief ,fullblog)
+        VALUES ('".$name."','".$_SESSION["id"]."','".$gener."','".$imsrc."','".$heading."','".$brief."','".$fullblog."')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -29,6 +34,6 @@ if ($conn->query($sql) === TRUE) {
 
 echo "sucess";
 $conn->close();
-@header("Location:/blog.php?page=1");
+@header("Location:/blog.php?page=1&gener=".$gener."");
 //@header("Location:http://lemonlight.cf/blog.php?page=1");
 ?>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,13 +11,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$acomment = $_POST["areply"];
-$uname = $_POST["uname"];
-$cid = $_POST["cid"];
-$blgid = $_POST["bloid"];
+$id = $_GET["id"];
+$heading = $_POST["title"];
+$brief = $_POST["description"];
+$fullblog = $_POST["editor1"];
+$imsrc = $_POST["image"];
+echo $imsrc;
+$gener = $_POST["catagory"];
+echo $fullblog;
 
-$sql = "INSERT INTO reply (uname, userid, reply, commentid)
-        VALUES ('".$uname."','".$_SESSION["id"]."','".$acomment."','".$cid."')";
+$sql = "UPDATE blog SET gener = '".$gener."',imsrc = '".$imsrc."',heading = '".$heading."',brief = '".$brief."',fullblog = '".$fullblog."' WHERE id = '".$id."'";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
@@ -28,6 +30,6 @@ if ($conn->query($sql) === TRUE) {
 
 echo "sucess";
 $conn->close();
-@header("Location:/bsingle.php?blogid=".$blgid."");
+@header("Location:/bsingle.php?blogid=".$id."&src=".$imsrc."");
 //@header("Location:http://lemonlight.cf/blog.php?page=1");
 ?>

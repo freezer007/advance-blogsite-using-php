@@ -38,17 +38,15 @@ id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 uname VARCHAR(30) NOT NULL,
 email varchar(50) NOT NULL,
 password VARCHAR(15) NOT NULL,
-isactive boolean DEFAULT false,
+imsrc varchar(20000) DEFAULT 'images/userpic.png',
 hash varchar(32) DEFAULT 'COMEON',
 adm boolean DEFAULT false,
-birthdate date,
+isactive boolean DEFAULT false,
 gender varchar(1),
-description varchar(250),
+description varchar(250) DEFAULT 'INDIAN',
 contry varchar(20) DEFAULT 'INDIA',
 lastsaw timestamp DEFAULT CURRENT_TIMESTAMP,
-permission varchar(3) DEFAULT 'RW-',
-following INT(8) DEFAULT 0,
-follower INT(8) DEFAULT 0
+permission varchar(3) DEFAULT 'RW-'
 )
 ";
 
@@ -61,21 +59,22 @@ if ($conn->query($sql) === TRUE) {
 
 $sql = "CREATE TABLE follow(
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-uname VARCHAR(30) NOT NULL,
-email varchar(50) NOT NULL,
+userid INT(6) NOT NULL,
+follows boolean DEFAULT true,
 followerid INT(8)
 )
 ";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Table active created successfully";
+    echo "Table follow created successfully";
     echo "</br>";
 } else {
     echo "Error creating table: " . $conn->error;
 }
 
 $sql = "CREATE TABLE blog(
-id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+id INT(8) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+userid INT(6) NOT NULL,
 uname VARCHAR(30) NOT NULL,
 blogdate timestamp DEFAULT CURRENT_TIMESTAMP,
 gener varchar(20) DEFAULT 'other',
@@ -128,10 +127,10 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $sql = "CREATE TABLE likes(
-id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
+id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 bloggerid INT(6),
 blogid INT(6),
-choise varchar(10)
+choise boolean DEFAULT false
 )
 ";
 

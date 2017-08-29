@@ -177,12 +177,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				{
 					$page1 = ($page*5) - 5;
 				}
-				$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief FROM blog WHERE gener ='".$gen1."' ORDER BY blogdate DESC limit $page1,5";
+				$sql = "SELECT * FROM blog WHERE gener ='".$gen1."' ORDER BY blogdate DESC limit $page1,5";
 				$result = $conn->query($sql) or die($conn->error);
 				$n = 5;
 				while($row = $result->fetch_assoc() and $n>0) {
 				        $id = $row["id"];
 				        $name = $row["uname"];
+				        $creatorid = $row["userid"];
 				        $gener = $row["gener"];
 				        $date = $row["blogdate"];
 				        $src = $row["imsrc"];
@@ -191,14 +192,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        $n = $n-1?>
 				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
 					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" alt=" "></a>
+						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" style="width:800px"" alt=" " ></a>
 					</div>
 					<div class="blog-articla-grid-info">
 						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading; ?></a></h3>
 						<ul>
 							<li><p>post on<?php echo $date; ?></p></li>
-							<li><a href="bsingle.php"><?php echo $name; ?></a></li>
-							<li><a href="blog.php?page=<?php echo $gener;?>"><?php echo $gener; ?></a></li>
+							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>"><?php echo $name; ?></a></li>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>"><?php echo $gener; ?></a></li>
 							<p class="artical-para"><?php echo $brief; ?>
 							</p>
 							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Read More</a>
@@ -215,8 +216,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="clear"> </div>
 			<div class="icons-pagenate">
 				<ul>
+				<li><a class="frist-page" href="blog.php?page=1&gener=<?php echo $gen1;?>"> </a></li>
 				<?php 
-					$sql = "SELECT * FROM blog";
+					$sql = "SELECT * FROM blog where gener = '".$gen1."'";
 					$res = $conn->query($sql) or die($conn->error);
 					$noofrows = $res->num_rows;
 					$noofrows = $noofrows/5;
@@ -224,13 +226,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					for($b=1;$b<=$a;$b++)
 					{
 						?>
-					<li><a class="frist-page" href="#"> </a></li>
-					<li><a href="blog.php?page=<?php echo $b;?>"><?php echo $b;?></a></li>
-					<li><a class="last-page" href="#"> </a></li>
+					<li><a href="blog.php?page=<?php echo $b;?>&gener=<?php echo $gen1;?>"><?php echo $b;?></a></li>
 				<?php
 					}
 				$conn->close();
-				?>
+				?><li><a class="last-page" href="blog.php?page=<?php echo $b-1;?>&gener=<?php echo $gen1;?>"> </a></li>
 					<div class="clear"> </div>
 				</ul>
 			</div>

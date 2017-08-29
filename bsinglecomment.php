@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -13,7 +14,7 @@ if ($conn->connect_error) {
 
 $acomment = $_POST["acomment"];
 $uname = $_POST["uname"];
-$userid = $_POST["usrid"];
+$userid = $_SESSION["id"];
 $blgid = $_POST["blgid"];
 
 $sql = "INSERT INTO comment (uname, userid, blogid, comment)
