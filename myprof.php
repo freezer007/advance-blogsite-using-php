@@ -70,7 +70,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						if ($conn->connect_error) {
 						    die("Connection failed: " . $conn->connect_error);
 						} 
-						$page = $_GET["uid"];
+						$page = $_SESSION["id"];
 						if($page == "")
 						{
 							$page1 = 1;
@@ -97,11 +97,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    	{
 				    		$gender = "female";
 				    	}
+				    	$sql = "SELECT * FROM follow where follows = true and userid ='".$page1."'";
+						$result = $conn->query($sql) or die($conn->error);
+						$followers = $result->num_rows;
 					    $conn->close(); 
 					    if($id == $_SESSION["id"])
 					    {
-					    	$display = "display: none;"; 
+					    	$display = "display: none;";
+					    	$notdisplay = ""; 
 					    }
+					    else
+					    {
+					    	$notdisplay = "display: none;";
+					    	$display = "";
+					    }
+
 					       ?>
 		<!---//End-header---->
 		<!---start-content---->
@@ -110,8 +120,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="wrap">
 			<div id="makeithidden" style="<?php echo $display;?>">
 				<a class="comment-replay" href="uedit.php?id=<?php echo $id;?>" style="float: right;">Edit the profile page</a>
+			</div><br><div id="makeithidden" style="<?php echo $notdisplay;?>">
+				<a class="comment-replay" href="addfollow.php?userid=<?php echo $page1;?>" style="float: right;">follow(<?php echo $followers;?>)</a>
 			</div><br>
-					<h3>about <?php echo $name;?></h3>
+					<h3>about :-<?php echo $name;?></h3>
 					<div class="team-grids">
 						<a href="#"><img src="<?php echo $src; ?>" alt="" /></a><br><h4><a href="#" style="font-size: 32px">name:-<?php echo $name;?></a></h4><span>email :-<?php echo $email;?><br>gender :-<?php echo $gender;?></span>
 						    <p> <?php echo $description;?></p>	
@@ -122,6 +134,65 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 		</div>
 		<!---End-about---->
+		<!---start-notification---->
+		<div class="blog-articlas">
+			<div class="wrap">
+				<div class="content-top-header">
+					<h3>Notifications</h3>
+					<p>Find out What's Going On</p>
+				</div>
+			<div class="clear"> </div>		
+			<?php 
+				$servername = "localhost";
+				$username = "root";
+				$password = "";
+				$dbname = "god";
+				$conn = new mysqli($servername, $username, $password, $dbname);
+				// Check connection
+				if ($conn->connect_error) {
+				    die("Connection failed: " . $conn->connect_error);
+				} 
+
+				$sql = "SELECT * FROM blog WHERE userid in (select userid from follow where followerid = ')".$_SESSION["id"]."(') ORDER BY blogdate DESC ";
+				$result = $conn->query($sql) or die($conn->error);
+				$n = 5;
+				while($row = $result->fetch_assoc() and $n>0) {
+				        $id = $row["id"];
+				        $creatorid = $row["userid"];
+				        $name = $row["uname"];
+				        
+				        $gener = $row["gener"];
+				        $date = $row["blogdate"];
+				        $src = $row["imsrc"];
+				        $heading = $row["heading"];
+				        $brief = $row["brief"];
+				        $n = $n-1?>
+			<div class="blog-articla-grid">
+					<div class="blog-articla-grid-pic">
+						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" alt=" " /></a>
+					</div>
+					<div class="blog-articla-grid-info">
+						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading;?></a></h3>
+						<ul>
+							<li><p>post on <?php echo $date; ?></p></li>
+							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>"> By <?php echo $name; ?></a></li>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">catagory :-<?php echo $gener; ?></a></li>
+							<p class="artical-para"><?php echo $brief; ?>
+							</p>
+							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Read More</a>
+						</ul>
+					</div>
+					<div class="clear"> </div>
+			</div>
+
+
+			<?php
+				        	}
+
+			$conn->close();
+			?>
+		<!---//End-notification---->
+
 		<!---//End-content---->
 		<div class="bottom-grids">
 			<div class="wrap"> 

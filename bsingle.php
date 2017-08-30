@@ -70,11 +70,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						{
 							$page1 = $page;
 						}
-						$sql = "SELECT id, uname, gener, blogdate,imsrc,heading,brief,fullblog FROM blog WHERE id ='".$page1."'";
+						$sql = "SELECT * FROM blog WHERE id ='".$page1."'";
 						$result = $conn->query($sql) or die($conn->error);
 						while($row = $result->fetch_assoc()) {
 				        $id = $row["id"];
 				        $blogid = $id;
+				        $creatorid = $row["userid"];
 				        $name = $row["uname"];
 				        $gener = $row["gener"];
 				        $date = $row["blogdate"];
@@ -90,7 +91,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<h3><a href="#"><?php echo $heading; ?></a></h3>
 						<ul>
 							<li><a href="#">posted on :-<?php echo $date; ?></a></li>
-							<li><a href="#">posted by:-<?php echo $name; ?></a></li>
+							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>">posted by:-<?php echo $name; ?></a></li>
 							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>"><?php echo $gener; ?></a></li>
 						</ul>
 						</div>

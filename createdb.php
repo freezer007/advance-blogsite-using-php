@@ -43,7 +43,7 @@ hash varchar(32) DEFAULT 'COMEON',
 adm boolean DEFAULT false,
 isactive boolean DEFAULT false,
 gender varchar(1),
-description varchar(250) DEFAULT 'INDIAN',
+description varchar(2500) DEFAULT 'INDIAN',
 contry varchar(20) DEFAULT 'INDIA',
 lastsaw timestamp DEFAULT CURRENT_TIMESTAMP,
 permission varchar(3) DEFAULT 'RW-'

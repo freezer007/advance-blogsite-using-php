@@ -11,9 +11,14 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
+$sql = "SELECT * FROM user WHERE id='".$_SESSION["id"]."'";
+
+		$result = $conn->query($sql) or die($conn->error);
+						while($row = $result->fetch_assoc()) {
+				        $uname = $row["uname"];
+				    	}
 
 $acomment = $_POST["areply"];
-$uname = $_POST["uname"];
 $cid = $_POST["cid"];
 $blgid = $_POST["bloid"];
 

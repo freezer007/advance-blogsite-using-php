@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["id"];
+		echo $_SESSION["eml"];
 		echo "<br>";
 		echo $_SESSION["psw"];
 		$dis = "display: none;";
@@ -18,9 +18,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Limelight website for high end mobiles,like samsung nokia mobile website templates for free | about :: w3layouts</title>
-		<link rel="shortcut icon" type="image/x-icon" href="images/fave-icon.png" />
-	    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+		<title>Limelight website for high end mobiles,like samsung nokia mobile website templates for free | Blog :: w3layouts</title>
+		<link rel="shortcut icon" type="image/x-icon" href="../images/fave-icon.png" />
+	    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all" />
 	   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	   <script type="text/javascript">
@@ -37,8 +37,78 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				
 			});
 	</script>
+	<!---start-blog---->
+	<script type="text/javascript" src="../js/jquery.easing.min.js"></script>	
+	<script type="text/javascript" src="../js/jquery.mixitup.min.js"></script>
+	<script type="text/javascript">
+	$(function () {
+		
+		var filterList = {
+		
+			init: function () {
+			
+				// MixItUp plugin
+				// http://mixitup.io
+				$('#portfoliolist').mixitup({
+					targetSelector: '.portfolio1',
+					filterSelector: '.filter',
+					effects: ['fade'],
+					easing: 'snap',
+					// call the hover effect
+					onMixEnd: filterList.hoverEffect()
+				});				
+			
+			},
+			
+			hoverEffect: function () {
+			
+				// Simple parallax effect
+				$('#portfoliolist .portfolio1').hover(
+					function () {
+						$(this).find('.label').stop().animate({bottom: 0}, 200, 'easeOutQuad');
+						$(this).find('img').stop().animate({top: -2}, 500, 'easeOutQuad');				
+					},
+					function () {
+						$(this).find('.label').stop().animate({bottom: -40}, 200, 'easeInQuad');
+						$(this).find('img').stop().animate({top: 0}, 300, 'easeOutQuad');								
+					}		
+				);				
+			
+			}
+
+		};
+		
+		// Run the show!
+		filterList.init();
+	});	
+	</script>
+	<!---//start-blog---->
 	</head>
 	<body>
+	<?php 
+	$gen = $_GET["gener"];
+	$op1 = "filter";
+	$op2 = "filter";
+	$op3 = "filter";
+	$op4 = "filter";
+	if($gen == "")
+	{
+		$gen1 = "User";
+		$op1 = "filter active";
+	}
+	else
+	{
+		$gen1 = $gen;
+	}
+	if($gen1 == "User")
+	{
+		$op1 = "filter active";
+	}
+	if($gen1 == "Blog")
+	{
+		$op2 = "filter active";
+	}
+	?>
 		<!---start-wrap---->
 		<div class="wrap">
 		<!---strat-header---->
@@ -50,9 +120,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
 					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
-					<li class="active"><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
-					<li><a href="singup/forgot.php">change password</a></li>
+					<li><a href="blog.php?page=1">Blog</a></li>
+					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
 					<div class="clear"> </div>
@@ -61,84 +130,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="clear"> </div>
 		</div>
 		</div>
-		<?php 
-						$servername = "localhost";
-						$username = "root";
-						$password = "";
-						$dbname = "god";
-						$conn = new mysqli($servername, $username, $password, $dbname);
-						// Check connection
-						if ($conn->connect_error) {
-						    die("Connection failed: " . $conn->connect_error);
-						} 
-						$page = $_SESSION["id"];
-						if($page == "")
-						{
-							$page1 = 1;
-						}
-						else
-						{
-							$page1 = $page;
-						}
-						$sql = "SELECT * FROM user WHERE id ='".$page1."'";
-						$result = $conn->query($sql) or die($conn->error);
-						while($row = $result->fetch_assoc()) {
-				        $id = $row["id"];
-				        $name = $row["uname"];
-				        $email = $row["email"];
-				        $src = $row["imsrc"];
-				        $gender = $row["gender"];
-				        $description = $row["description"];
-				    	}
-				    	if($gender == "M")
-				    	{
-				    		$gender = "male";
-				    	}
-				    	else
-				    	{
-				    		$gender = "female";
-				    	}
-				    	$sql = "SELECT * FROM follow where follows = true and userid ='".$page1."'";
-						$result = $conn->query($sql) or die($conn->error);
-						$followers = $result->num_rows;
-					    $conn->close(); 
-					    if($id == $_SESSION["id"])
-					    {
-					    	$notdisplay = "display: none;";
-					    	$display = ""; 
-					    }
-					    else
-					    {
-					    	$display = "display: none;";
-					    	$notdisplay = "";
-					    }
-
-					       ?>
 		<!---//End-header---->
 		<!---start-content---->
-		<!---strat-about---->
-		<div class="about">
+		<!---start-blog---->
+		<div class="blog">
 			<div class="wrap">
-			<div id="makeithidden" style="<?php echo $display;?>">
-				<a class="comment-replay" href="uedit.php?id=<?php echo $id;?>" style="float: right;">Edit the profile page</a>
-			</div><br>
-					<h3>about <?php echo $name;?></h3>
-					<div class="team-grids">
-						<a href="#"><img src="<?php echo $src; ?>" alt="" /></a><br><h4><a href="#" style="font-size: 32px">name:-<?php echo $name;?></a></h4><span>email :-<?php echo $email;?><br>gender :-<?php echo $gender;?></span>
-						    <p>Description:- <?php echo $description;?></p>	
-						</div>
-						<div class="clear"> </div>
-					</div>
+				<div class="blog-header">
+					<h3>Blog</h3>
 				</div>
 			</div>
-		</div>
-		<div class="blog-articlas">
-			<div class="wrap">
-				<div class="content-top-header">
-					<h3>Notifications</h3>
-					<p>Find out What's Going On</p>
+			<ul id="filters" class="clearfix">
+				<div class="wrap"> 
+						<li><a href="admin.php?page=1&gener=User"><span class="<?php echo $op1;?>" data-filter="icon">Blogger</span></a></li>
+						<li><a href="admin.php?page=1&gener=Blog"><span class="<?php echo $op2;?>" data-filter="web">Blog</span></a></li>
+						<div class="clear"> </div>
 				</div>
-			<div class="clear"> </div>		
+			</ul>
+			<div class="wrap"> 
+			<div class="blog-grids" id="portfoliolist">
 			<?php 
 				$servername = "localhost";
 				$username = "root";
@@ -149,55 +158,76 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				if ($conn->connect_error) {
 				    die("Connection failed: " . $conn->connect_error);
 				} 
-				$ids = "(";
-				$sql = "SELECT userid,followerid,follows FROM follow WHERE followerid = '".$page1."' and follows = true";
-				$result = $conn->query($sql) or die($conn->error);
-						while($row = $result->fetch_assoc()) {
-				        $userid = $row["userid"];
-				        $ids = $ids."'".$userid."',";
+				$page = $_GET["page"];
+				if($page == "" || $page == "1")
+				{
+					$page1 = 0;
 				}
-				$ids = $ids."'0')";
-				echo $ids;
-				$sql = "SELECT * FROM blog where userid in ".$ids." ORDER BY blogdate DESC ";
+				else
+				{
+					$page1 = ($page*5) - 5;
+				}
+				$sql = "SELECT * FROM ".$gen1." ORDER BY id DESC limit $page1,10";
 				$result = $conn->query($sql) or die($conn->error);
-				$n = 5;
-				while($row = $result->fetch_assoc() and $n>0) {
+				while($row = $result->fetch_assoc() ) {
 				        $id = $row["id"];
-				        $creatorid = $row["userid"];
 				        $name = $row["uname"];
-				        
-				        $gener = $row["gener"];
-				        $date = $row["blogdate"];
-				        $src = $row["imsrc"];
-				        $heading = $row["heading"];
-				        $brief = $row["brief"];
-				        $n = $n-1?>
-			<div class="blog-articla-grid">
-					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" alt=" " /></a>
-					</div>
+				        if($gen1 == "Blog")
+				        {
+				        	$heading = $row["heading"];
+				        	$gener = $row["gener"];
+				        }
+				        else{
+				        	$permission = $row["permission"];
+				        }
+
+				        	?>
+				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
 					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading;?></a></h3>
-						<ul>
-							<li><p>post on <?php echo $date; ?></p></li>
-							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>"> By <?php echo $name; ?></a></li>
-							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">catagory :-<?php echo $gener; ?></a></li>
-							<p class="artical-para"><?php echo $brief; ?>
-							</p>
-							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Read More</a>
+						<ul><?php if($gen1 == "Blog"){?>
+							<li><a href="bsingle.php?blogid=<?php echo $id;?>">Heading:-<?php echo $heading; ?></a></p></li><br><?php }?>
+							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>">Username:-<?php echo $name; ?></a></li>
+							<?php if($gen1 == "User"){?><br>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">permission:-<?php echo $permission; ?></a></li><?php }?>
+							<?php if($gen1 == "Blog"){?>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>"><?php echo $gener; ?></a></li><?php }?>
+							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Drop</a>
+							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Edit</a>
 						</ul>
 					</div>
 					<div class="clear"> </div>
-			</div>
-
-
+				</div>
+				<div class="clear"> </div>
 			<?php
-				        	}
-
-			$conn->close();
+			 	}
 			?>
-		<!---End-about---->
-		<!---//End-content---->
+			</div>
+			</div>
+			<div class="clear"> </div>
+			<div class="icons-pagenate">
+				<ul>
+				<li><a class="frist-page" href="blog.php?page=1&gener=<?php echo $gen1;?>"> </a></li>
+				<?php 
+					$sql = "SELECT * FROM ".$gen1."";
+					$res = $conn->query($sql) or die($conn->error);
+					$noofrows = $res->num_rows;
+					$noofrows = $noofrows/10;
+					$a = ceil($noofrows);
+					for($b=1;$b<=$a;$b++)
+					{
+						?>
+					<li><a href="blog.php?page=<?php echo $b;?>&gener=<?php echo $gen1;?>"><?php echo $b;?></a></li>
+				<?php
+					}
+				$conn->close();
+				?><li><a class="last-page" href="blog.php?page=<?php echo $b-1;?>&gener=<?php echo $gen1;?>"> </a></li>
+					<div class="clear"> </div>
+				</ul>
+			</div>
+			<div class="clear"> </div>
+			</div>
+		</div>
+		<!---//End-blog---->
 		<div class="bottom-grids">
 			<div class="wrap"> 
 			<div class="bottom-grid-left">

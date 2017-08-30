@@ -4,10 +4,21 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+	<?php
+		session_start();
+		echo $_SESSION["eml"];
+		echo "<br>";
+		echo $_SESSION["psw"];
+		$dis = "display: none;";
+		if ($_SESSION["eml"] != "")
+{
+	$dis = "";
+}
+	?>
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Limelight website for high end mobiles,like samsung nokia mobile website templates for free | Home :: w3layouts</title>
+		<title>Limelight website for high end mobiles,like samsung nokia mobile website templates for free | Blog :: w3layouts</title>
 		<link rel="shortcut icon" type="image/x-icon" href="images/fave-icon.png" />
 	    <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 	   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -23,73 +34,89 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				},function(){
 					$(this).children('.description').stop().fadeTo(500, 0);
 				});
+				
 			});
 	</script>
+	<!---start-blog---->
+	<script type="text/javascript" src="js/jquery.easing.min.js"></script>	
+	<script type="text/javascript" src="js/jquery.mixitup.min.js"></script>
+	<script type="text/javascript">
+	$(function () {
+		
+		var filterList = {
+		
+			init: function () {
+			
+				// MixItUp plugin
+				// http://mixitup.io
+				$('#portfoliolist').mixitup({
+					targetSelector: '.portfolio1',
+					filterSelector: '.filter',
+					effects: ['fade'],
+					easing: 'snap',
+					// call the hover effect
+					onMixEnd: filterList.hoverEffect()
+				});				
+			
+			},
+			
+			hoverEffect: function () {
+			
+				// Simple parallax effect
+				$('#portfoliolist .portfolio1').hover(
+					function () {
+						$(this).find('.label').stop().animate({bottom: 0}, 200, 'easeOutQuad');
+						$(this).find('img').stop().animate({top: -2}, 500, 'easeOutQuad');				
+					},
+					function () {
+						$(this).find('.label').stop().animate({bottom: -40}, 200, 'easeInQuad');
+						$(this).find('img').stop().animate({top: 0}, 300, 'easeOutQuad');								
+					}		
+				);				
+			
+			}
+
+		};
+		
+		// Run the show!
+		filterList.init();
+	});	
+	</script>
+	<!---//start-blog---->
 	</head>
 	<body>
-<?php
-// Set session variables
-	// define variables and set to empty values
-$email = $password = "";
-$hidden = "text";
-$hid = "submit";
-$pos = "hidden";
-$dis = "display: none;";
-$forgot = "";
-$logout = "logout.php";
-if(session_id() == '' || !isset($_SESSION)) {
-    // session isn't started
-    session_start();
-    if(!isset($_SESSION["eml"])){
-    	$_SESSION["eml"] = "";
-  		$_SESSION["psw"] = "";
- 	 }
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$password222 = $_POST["password"];
-	$email222 = $_POST["email"];
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname = "god";
-	$conn = new mysqli($servername, $username, $password, $dbname);
-	// Check connection
-	if ($conn->connect_error) {
-	    die("Connection failed: " . $conn->connect_error);
-	} 
-	$sql = "SELECT * FROM user where email = '".$email222."' and password = '".$password222."'";
-	$result = $conn->query($sql) or die($conn->error);
-	$ans = $result->num_rows;
-	echo $ans;
-	if($ans != 0)
+	<?php 
+	$gen = $_GET["gener"];
+	$op1 = "filter";
+	$op2 = "filter";
+	$op3 = "filter";
+	$op4 = "filter";
+	if($gen == "")
 	{
-		while($row = $result->fetch_assoc()) {
-		$cid = $row["id"];
-	    $email = $row["email"];
-	    $password = $row["password"];
-		$permission = $row["permission"];}
-	$_SESSION["per"] = $permission;
-	$_SESSION["id"] = $cid;
-	echo $_SESSION["per"];
-	$_SESSION["psw"] = $password;}
-}
-if ($_SESSION["eml"] != "")
-{
-	$hidden = $hid = "hidden";
-	$dis = "";
-	$pos= "submit";
-	$forgot = "display: none;";
-}
-if ($_SESSION["per"] == "RWX")
-{
-	$add = "admin.php?gener=User&page=1";
-	$admi = "<li><a href=".$add.">Admin</a></li>";
-}
-else
-{
-	$admi = "";
-}
-?>
+		$gen1 = "User";
+		$op1 = "filter active";
+	}
+	else
+	{
+		$gen1 = $gen;
+	}
+	if($gen1 == "Mobile")
+	{
+		$op1 = "filter active";
+	}
+	if($gen1 == "Technology")
+	{
+		$op2 = "filter active";
+	}
+	if($gen1 == "Study")
+	{
+		$op3 = "filter active";
+	}
+	if($gen1 == "Other")
+	{
+		$op4 = "filter active";
+	}
+	?>
 		<!---start-wrap---->
 		<div class="wrap">
 		<!---strat-header---->
@@ -100,9 +127,8 @@ else
 			<div class="top-nav">
 				<ul>
 					<li><a href="index.php"> <span> </span></a></li>
-					<li class="active"><a href="index.php">Home</a></li>
-					<?php echo $admi;?>
-					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
+					<li><a href="index.php">Home</a></li>
+					<li><a href="blog.php?page=1">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
 					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
@@ -113,40 +139,25 @@ else
 		</div>
 		</div>
 		<!---//End-header---->
-		<!---start-slider---->
-		<div class="slider">
-			<div class="wrap"> 
-			<div class="slider-left">
-				<em> </em>
-				<h1>Premimum Design Graphic Resources Center</h1>
-				<p>We Offer high quality design resources such as fonts, icons sets,web templates,backgrounds,and much more for <span>FREE!</span></p>
-				<label>Join our mailling list & recevie a new freebie everday!</label>
-				<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-					<input type="<?php echo $hidden ?>" class="textbox" name="email" placeholder="Email address.." >
-					<input type="<?php echo $hidden ?>" class="textbox" name="password" placeholder="Password.."><input type="<?php echo $hid?>" value="Login" /><br>
-					<a href="signup/forgot.php" style="<?php echo $forgot ?>"> Forgot Password</a>
-					<p <?php echo $hid?>> dont have account ? <a href="signup/">Sign up</a></p>
-				</form>
-				<form method="post" action="cnew.php">
-				<input type="<?php echo $pos?>" value="Create A New Blog" />
-				</form>
-			</div>
-			<div class="slider-right">
-				<img src="images/slider-img.png" alt="" />
-			</div>
-			<div class="clear"> </div>
-		</div>
-		</div>
-		<!---//End-slider---->
 		<!---start-content---->
-		<!---start-articls---->
-		<div class="blog-articlas">
+		<!---start-blog---->
+		<div class="blog">
 			<div class="wrap">
-				<div class="content-top-header">
-					<h3>Latest News</h3>
-					<p>Find out What's Going On</p>
+				<div class="blog-header">
+					<h3>Blog</h3>
 				</div>
-			<div class="clear"> </div>		
+			</div>
+			<ul id="filters" class="clearfix">
+				<div class="wrap"> 
+						<li><a href="blog.php?page=1&gener=Mobile"><span class="<?php echo $op1;?>" data-filter="icon">Mobile</span></a></li>
+						<li><a href="blog.php?page=1&gener=Technology"><span class="<?php echo $op2;?>" data-filter="web">Technology</span></a></li>
+						<li><a href="blog.php?page=1&gener=Study"><span class="<?php echo $op3;?>" data-filter="app card icon logo web">Study</span></a></li>
+						<li><a href="blog.php?page=1&gener=Other"><span class="<?php echo $op4;?>" data-filter="web2">Other</span></a></li>
+						<div class="clear"> </div>
+				</div>
+			</ul>
+			<div class="wrap"> 
+			<div class="blog-grids" id="portfoliolist">
 			<?php 
 				$servername = "localhost";
 				$username = "root";
@@ -157,46 +168,76 @@ else
 				if ($conn->connect_error) {
 				    die("Connection failed: " . $conn->connect_error);
 				} 
-
-				$sql = "SELECT * FROM blog ORDER BY blogdate DESC ";
+				$page = $_GET["page"];
+				if($page == "" || $page == "1")
+				{
+					$page1 = 0;
+				}
+				else
+				{
+					$page1 = ($page*5) - 5;
+				}
+				$sql = "SELECT * FROM blog WHERE gener ='".$gen1."' ORDER BY blogdate DESC limit $page1,5";
 				$result = $conn->query($sql) or die($conn->error);
 				$n = 5;
 				while($row = $result->fetch_assoc() and $n>0) {
 				        $id = $row["id"];
-				        $creatorid = $row["userid"];
 				        $name = $row["uname"];
-				        
+				        $creatorid = $row["userid"];
 				        $gener = $row["gener"];
 				        $date = $row["blogdate"];
 				        $src = $row["imsrc"];
 				        $heading = $row["heading"];
 				        $brief = $row["brief"];
 				        $n = $n-1?>
-			<div class="blog-articla-grid">
+				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
 					<div class="blog-articla-grid-pic">
-						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" alt=" " /></a>
+						<a href="bsingle.php?blogid=<?php echo $id;?>"><img src="<?php echo $src; ?>" style="width:800px"" alt=" " ></a>
 					</div>
 					<div class="blog-articla-grid-info">
-						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading;?></a></h3>
+						<h3><a href="bsingle.php?blogid=<?php echo $id;?>"><?php echo $heading; ?></a></h3>
 						<ul>
-							<li><p>post on <?php echo $date; ?></p></li>
-							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>"> By <?php echo $name; ?></a></li>
-							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">catagory :-<?php echo $gener; ?></a></li>
+							<li><p>post on<?php echo $date; ?></p></li>
+							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>"><?php echo $name; ?></a></li>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>"><?php echo $gener; ?></a></li>
 							<p class="artical-para"><?php echo $brief; ?>
 							</p>
 							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Read More</a>
 						</ul>
 					</div>
 					<div class="clear"> </div>
-			</div>
-
-
+				</div>
+				<div class="clear"> </div>
 			<?php
-				        	}
-
-			$conn->close();
+			 	}
 			?>
-		<!---//End-articls---->
+			</div>
+			</div>
+			<div class="clear"> </div>
+			<div class="icons-pagenate">
+				<ul>
+				<li><a class="frist-page" href="blog.php?page=1&gener=<?php echo $gen1;?>"> </a></li>
+				<?php 
+					$sql = "SELECT * FROM blog where gener = '".$gen1."'";
+					$res = $conn->query($sql) or die($conn->error);
+					$noofrows = $res->num_rows;
+					$noofrows = $noofrows/5;
+					$a = ceil($noofrows);
+					for($b=1;$b<=$a;$b++)
+					{
+						?>
+					<li><a href="blog.php?page=<?php echo $b;?>&gener=<?php echo $gen1;?>"><?php echo $b;?></a></li>
+				<?php
+					}
+				$conn->close();
+				?><li><a class="last-page" href="blog.php?page=<?php echo $b-1;?>&gener=<?php echo $gen1;?>"> </a></li>
+					<div class="clear"> </div>
+				</ul>
+			</div>
+			<div class="clear"> </div>
+			</div>
+		</div>
+		<!---//End-blog---->
 		<div class="bottom-grids">
 			<div class="wrap"> 
 			<div class="bottom-grid-left">
@@ -249,7 +290,7 @@ else
 					<ul>
 						<li><a href="index.php">Home</a></li>
 						<li><a href="about.php">About</a></li>
-						<li><a href="blog.php">Archive</a></li>
+						<li><a href="blog.php?page=1">Archive</a></li>
 						<li><a href="contact.php">Contact</a></li>
 						<div class="clear"> </div>
 					</ul>

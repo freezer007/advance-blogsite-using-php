@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["eml"];
+		echo $_SESSION["id"];
 		echo "<br>";
 		echo $_SESSION["psw"];
 		$dis = "display: none;";
@@ -52,7 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<li><a href="index.php">Home</a></li>
 					<li><a href="blog.php?page=1">Blog</a></li>
 					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
-					<li class="active"><a href="about.php">About us</a></li>
+					<li><a href="about.php">About us</a></li>
 					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
 					<div class="clear"> </div>
 				</ul>
@@ -103,13 +103,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					    $conn->close(); 
 					    if($id == $_SESSION["id"])
 					    {
-					    	$display = "display: none;";
-					    	$notdisplay = ""; 
+					    	$notdisplay = "display: none;";
+					    	$display = ""; 
 					    }
 					    else
 					    {
-					    	$notdisplay = "display: none;";
-					    	$display = "";
+					    	$display = "display: none;";
+					    	$notdisplay = "";
 					    }
 
 					       ?>
@@ -126,7 +126,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<h3>about <?php echo $name;?></h3>
 					<div class="team-grids">
 						<a href="#"><img src="<?php echo $src; ?>" alt="" /></a><br><h4><a href="#" style="font-size: 32px">name:-<?php echo $name;?></a></h4><span>email :-<?php echo $email;?><br>gender :-<?php echo $gender;?></span>
-						    <p> <?php echo $description;?></p>	
+						    <p>Description:- <?php echo $description;?></p>	
 						</div>
 						<div class="clear"> </div>
 					</div>
