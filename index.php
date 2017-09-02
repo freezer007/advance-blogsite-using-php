@@ -43,11 +43,17 @@ if(session_id() == '' || !isset($_SESSION)) {
     if(!isset($_SESSION["eml"])){
     	$_SESSION["eml"] = "";
   		$_SESSION["psw"] = "";
+  		$_SESSION["per"] = "";
+  		$_SESSION["id"] = "";
  	 }
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$password222 = $_POST["password"];
 	$email222 = $_POST["email"];
+	$password222 = md5($password222);
+	$password222 = sha1($password222);
+	$cr = "cr";
+	$password222 = crypt($password222,$cr);
 	$servername = "localhost";
 	$username = "root";
 	$password = "";
@@ -57,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($conn->connect_error) {
 	    die("Connection failed: " . $conn->connect_error);
 	} 
-	$sql = "SELECT * FROM user where email = '".$email222."' and password = '".$password222."'";
+	$sql = "SELECT * FROM user where email = '".$email222."' and password = '".$password222."' and isactive = '1'";
 	$result = $conn->query($sql) or die($conn->error);
 	$ans = $result->num_rows;
 	echo $ans;
@@ -71,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$_SESSION["per"] = $permission;
 	$_SESSION["id"] = $cid;
 	echo $_SESSION["per"];
-	$_SESSION["psw"] = $password;}
+	$_SESSION["eml"] = $email;}
 }
 if ($_SESSION["eml"] != "")
 {
@@ -79,15 +85,6 @@ if ($_SESSION["eml"] != "")
 	$dis = "";
 	$pos= "submit";
 	$forgot = "display: none;";
-}
-if ($_SESSION["per"] == "RWX")
-{
-	$add = "admin.php?gener=User&page=1";
-	$admi = "<li><a href=".$add.">Admin</a></li>";
-}
-else
-{
-	$admi = "";
 }
 ?>
 		<!---start-wrap---->
@@ -99,13 +96,21 @@ else
 			</div>
 			<div class="top-nav">
 				<ul>
+
 					<li><a href="index.php"> <span> </span></a></li>
 					<li class="active"><a href="index.php">Home</a></li>
-					<?php echo $admi;?>
+					<li><a href="search.php?page=1&gener=blog" >Search</a></li>
+					<?php if ($_SESSION["per"] == "RWX"){?>
+					<li><a href="admin.php?gener=User&page=1">Admin</a></li>
+					<?php }?>
 					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
-					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
+					<?php if ($_SESSION["eml"] != ""){?>
+					<li><a href="profile.php" >Profile</a></li>
+					<?php }?>
 					<li><a href="about.php">About us</a></li>
-					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
+					<?php if ($_SESSION["eml"] != ""){?>
+					<li><a href="logout.php" >Logout</a></li>
+					<?php }?>
 					<div class="clear"> </div>
 				</ul>
 			</div>
@@ -124,7 +129,7 @@ else
 				<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 					<input type="<?php echo $hidden ?>" class="textbox" name="email" placeholder="Email address.." >
 					<input type="<?php echo $hidden ?>" class="textbox" name="password" placeholder="Password.."><input type="<?php echo $hid?>" value="Login" /><br>
-					<a href="signup/forgot.php" style="<?php echo $forgot ?>"> Forgot Password</a>
+					<a href="signup/forgot.php" style="<?php echo $forgot ?>"> Forgot Password / Resend email</a>
 					<p <?php echo $hid?>> dont have account ? <a href="signup/">Sign up</a></p>
 				</form>
 				<form method="post" action="cnew.php">

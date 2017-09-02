@@ -6,9 +6,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["eml"];
-		echo "<br>";
-		echo $_SESSION["psw"];
 		$dis = "display: none;";
 		if ($_SESSION["eml"] != "")
 {
@@ -85,9 +82,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        $fullblog = $row["fullblog"];
 				    	}
 					    $conn->close();    ?>
-						<div id="makeithidden<?php echo $cid?>" style="">
+					    <?php 
+					    if($_SESSION["id"] == $creatorid)
+					    {?>
 								<a class="comment-replay" href="cedit.php?id=<?php echo $id;?>" style="float: right;">Edit the blog</a>
-						</div><br>
+						<?php }?>
+								<br>
 						<h3><a href="#"><?php echo $heading; ?></a></h3>
 						<ul>
 							<li><a href="#">posted on :-<?php echo $date; ?></a></li>

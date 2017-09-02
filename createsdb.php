@@ -15,16 +15,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 
-$sql = "CREATE TABLE follow(
+$sql = "CREATE TABLE contact(
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-userid INT(6) NOT NULL,
-follows boolean DEFAULT true,
-followerid INT(8)
+username varchar(30),
+email varchar(30),
+mobile varchar(10),
+subject varchar(250)
 )
 ";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Table follow created successfully";
+    echo "Table contact created successfully";
     echo "</br>";
 } else {
     echo "Error creating table: " . $conn->error;

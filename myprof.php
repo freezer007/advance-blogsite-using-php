@@ -6,9 +6,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["eml"];
-		echo "<br>";
-		echo $_SESSION["psw"];
+		if($_SESSION["id"]=="")
+{
+	@header("Location:/index.php");
+}
+if($_SESSION["per"] == "R--")
+{
+	@header("Location:/index.php");
+}
 		$dis = "display: none;";
 		if ($_SESSION["eml"] != "")
 {

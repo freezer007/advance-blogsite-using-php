@@ -18,6 +18,8 @@ session_start();
 $email = $password = "";
 $_SESSION["eml"] = "";
 $_SESSION["psw"] = "";
+$_SESSION["per"] = "";
+$_SESSION["id"] = "";
 @header("Location:index.php");
 
 	?>

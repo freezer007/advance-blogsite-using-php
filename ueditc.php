@@ -1,6 +1,13 @@
 <?php
 session_start();
-
+if($_SESSION["id"]=="")
+{
+	@header("Location:/index.php");
+}
+if($_SESSION["per"] != "R--")
+{
+	@header("Location:/index.php");
+}
 $servername = "localhost";
 $username = "root";
 $password = "";

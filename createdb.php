@@ -40,7 +40,6 @@ email varchar(50) NOT NULL,
 password VARCHAR(15) NOT NULL,
 imsrc varchar(20000) DEFAULT 'images/userpic.png',
 hash varchar(32) DEFAULT 'COMEON',
-adm boolean DEFAULT false,
 isactive boolean DEFAULT false,
 gender varchar(1),
 description varchar(2500) DEFAULT 'INDIAN',
@@ -141,6 +140,21 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
+$sql = "CREATE TABLE contact(
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+username varchar(30),
+email varchar(30),
+mobile varchar(10),
+subject varchar(250)
+)
+";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Table contact created successfully";
+    echo "</br>";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
 
 $conn->close();
 ?> 

@@ -6,9 +6,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["eml"];
-		echo "<br>";
-		echo $_SESSION["psw"];
+		if($_SESSION["id"]=="")
+{
+	@header("Location:/index.php");
+}
+if($_SESSION["per"] == "R--")
+{
+	@header("Location:/index.php");
+}
 		$dis = "display: none;";
 		if ($_SESSION["eml"] != "")
 {
@@ -137,12 +142,16 @@ function changeurl()
 				        $id = $row["id"];
 				        $blogid = $id;
 				        $name = $row["uname"];
+				        $creatorid = $row["userid"]
 				        $gener = $row["gener"];
 				        $date = $row["blogdate"];
 				        $src = $row["imsrc"];
 				        $heading = $row["heading"];
 				        $brief = $row["brief"];
 				        $fullblog = $row["fullblog"];
+				    	}
+				    	if($_SESSION["id"] != $creatorid){
+				    		@header("Location:/index.php");
 				    	}
 		$conn->close();
 ?>

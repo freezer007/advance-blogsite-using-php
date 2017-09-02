@@ -105,22 +105,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       				</div>
 				  <div class="contact-form">
 					<h2 class="style"><a href="#">Contact Us</a></h2>
-					    <form method="post" action="contact-post.php">
+					    <form method="post" action="admin/addc.php">
 					    	<div>
 						    	<span><label>NAME</label></span>
-						    	<span><input name="userName" type="text" class="textbox"></span>
+						    	<span><input name="userName" type="text" class="textbox" maxlength="30"></span>
 						    </div>
 						    <div>
 						    	<span><label>E-MAIL</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
+						    	<span><input name="userEmail" type="text" class="textbox" maxlength="30"></span>
 						    </div>
 						    <div>
 						     	<span><label>MOBILE</label></span>
-						    	<span><input name="userPhone" type="text" class="textbox"></span>
+						    	<span><input name="userPhone" type="text" class="textbox" maxlength="10"></span>
 						    </div>
 						    <div>
 						    	<span><label>SUBJECT</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
+						    	<span><textarea name="userMsg" maxlength="250"> </textarea></span>
 						    </div>
 						   <div>
 						   		<span><input type="submit" class="" value="Submit us"></span>

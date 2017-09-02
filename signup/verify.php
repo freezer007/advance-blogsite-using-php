@@ -42,8 +42,22 @@ if ($conn->connect_error) {
 $user = $_POST["Username"];
 $email = $_POST["Email"];
 $password = $_POST["pass"];
+$password = md5($password);
+$password = sha1($password);
+$cr = "cr";
+$password = crypt($password,$cr);
+echo $password;
 $gender = $_POST["Gender"];
 $hash = md5( rand(0,1000) );
+$sql = "SELECT * FROM user";
+$result = $conn->query($sql) or die($conn->error);
+$ans = $result->num_rows;
+echo $ans;
+$sql = "SELECT * FROM user where email = '".$email."'";
+$result = $conn->query($sql) or die($conn->error);
+$ans2 = $result->num_rows;
+echo $ans2;
+if($ans > 0 and $ans2 ==0){
 $sql = "INSERT INTO user (uname, email, password ,isactive ,hash ,gender)
         VALUES ('".$user."','".$email."','".$password."','0','".$hash."','".$gender."')";
 
@@ -52,7 +66,17 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-
+}
+if($ans == 0 and $ans2 ==0)
+{
+$sql = "INSERT INTO user (uname, email, password ,isactive ,hash ,gender,permission)
+        VALUES ('".$user."','".$email."','".$password."','1','".$hash."','".$gender."','RWX')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+}
 $conn->close();
 /*
 require("../PHPMailer_5.2.0/class.phpmailer.php");
@@ -92,8 +116,8 @@ Thanks for signing up!
 Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below. if it doesnt work then copy paste it in your browser
  
 ------------------------
-email: '.$email.'
-Password: '.$password.'
+email: ".$email."
+Password: '"$password."
 ------------------------
  
 Please click this link to activate your account:

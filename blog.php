@@ -6,9 +6,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["eml"];
-		echo "<br>";
-		echo $_SESSION["psw"];
 		$dis = "display: none;";
 		if ($_SESSION["eml"] != "")
 {

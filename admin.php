@@ -6,9 +6,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 	<?php
 		session_start();
-		echo $_SESSION["eml"];
-		echo "<br>";
-		echo $_SESSION["psw"];
+		if($_SESSION["id"]=="")
+		{
+			@header("Location:/index.php");
+		}
+		if($_SESSION["per"] != "RWX")
+		{
+			@header("Location:/index.php");
+		}
 		$dis = "display: none;";
 		if ($_SESSION["eml"] != "")
 {
@@ -108,6 +113,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	{
 		$op2 = "filter active";
 	}
+	if($gen1 == "Contact")
+	{
+		$op3 = "filter active";
+	}
 	?>
 		<!---start-wrap---->
 		<div class="wrap">
@@ -143,6 +152,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="wrap"> 
 						<li><a href="admin.php?page=1&gener=User"><span class="<?php echo $op1;?>" data-filter="icon">Blogger</span></a></li>
 						<li><a href="admin.php?page=1&gener=Blog"><span class="<?php echo $op2;?>" data-filter="web">Blog</span></a></li>
+						<li><a href="admin.php?page=1&gener=Contact"><span class="<?php echo $op3;?>" data-filter="web">Contact</span></a></li>
 						<div class="clear"> </div>
 				</div>
 			</ul>
@@ -171,28 +181,40 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				$result = $conn->query($sql) or die($conn->error);
 				while($row = $result->fetch_assoc() ) {
 				        $id = $row["id"];
-				        $name = $row["uname"];
-				        if($gen1 == "Blog")
-				        {
-				        	$heading = $row["heading"];
-				        	$gener = $row["gener"];
-				        }
-				        else{
-				        	$permission = $row["permission"];
-				        }
-
 				        	?>
 				<div class="blog-articla-grid  portfolio1 logo1" data-cat="app">
-					<div class="blog-articla-grid-info">
-						<ul><?php if($gen1 == "Blog"){?>
-							<li><a href="bsingle.php?blogid=<?php echo $id;?>">Heading:-<?php echo $heading; ?></a></p></li><br><?php }?>
-							<li><a href="userprofile.php?uid=<?php echo $creatorid; ?>">Username:-<?php echo $name; ?></a></li>
-							<?php if($gen1 == "User"){?><br>
-							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">permission:-<?php echo $permission; ?></a></li><?php }?>
-							<?php if($gen1 == "Blog"){?>
-							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>"><?php echo $gener; ?></a></li><?php }?>
-							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Drop</a>
-							<a class="artbtn" href="bsingle.php?blogid=<?php echo $id;?>">Edit</a>
+					<div class="blog-articla-grid-info" style="width:100%;">
+						<ul><?php if($gen1 == "Blog"){$heading = $row["heading"];$name = $row["uname"];$gener = $row["gener"];?>
+							<li><a href="bsingle.php?blogid=<?php echo $id;?>">Heading:-<?php echo $heading; ?></a></p></li><br>
+							<li><a href="userprofile.php?uid=<?php echo $id; ?>"><?php echo "username:-";echo $name; ?></a></li><br>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">gener:-<?php echo $gener; ?></a></li><br>
+							<a class="artbtn" href="admin/dropb.php?blogid=<?php echo $id;?>">Delete</a>
+							<?php }?>
+
+
+							<?php if($gen1 == "User"){$permission = $row["permission"];$name = $row["uname"];?>
+							<li><a href="userprofile.php?uid=<?php echo $id; ?>">Id:-<?php echo $id; ?></a></li><br>
+							<li><a href="userprofile.php?uid=<?php echo $id; ?>">Username:-<?php echo $name; ?></a></li><br>
+							<li><a href="blog.php?page=1&gener=<?php echo $gener;?>">permission:-<?php echo $permission; ?></a></li><br>
+							<form action="admin/changeu.php" method="post">
+							<select name="catagory" width="60%">
+							  <option>RW-</option>
+							  <option>R--</option>
+							  <option>RWX</option>
+							</select>
+							<input type="hidden" name="id" value="<?php echo $id;?>">
+							<input type="submit" value="Edit">
+							</form>
+							<?php }?>
+
+
+							<?php if($gen1 == "Contact"){$name = $row["username"];$subj = $row["subject"];$email1 = $row["email"];$mobile = $row["mobile"];?>
+							<li><a href="#">Username:-<?php echo $name; ?></a></p></li><br>
+							<li><a href="#">Email:-<?php echo $email1; ?></a></li><br>
+							<li><a href="#">Mobile:-<?php echo $mobile; ?></a></li><br>
+							<li><a href="#">Subject<?php echo $subj; ?></a></li><br>
+							<a class="artbtn" href="admin/dropcon.php?blogid=<?php echo $id;?>">Delete</a>
+							<?php }?>
 						</ul>
 					</div>
 					<div class="clear"> </div>

@@ -25,23 +25,37 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //web-fonts -->
 </head>
 <body>
-<?php 
+<?php
 $message = "";
-if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
+if($_GET["email"] != "" AND $_GET["hash"] != "")
+{
     // Verify data
-    $email = mysql_escape_string($_GET['email']); // Set email variable
-    $hash = mysql_escape_string($_GET['hash']); // Set hash variable
-    $search = mysql_query("SELECT email, hash, isactive FROM user WHERE email='".$email."' AND hash='".$hash."' AND isactive='0'") or die(mysql_error()); 
-	$match  = mysql_num_rows($search);
+    $servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "god";
+
+	// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	// Check connection
+	if ($conn->connect_error) {
+	    die("Connection failed: " . $conn->connect_error);
+	} 
+	
+	$sql = "SELECT email, hash, isactive FROM user WHERE email='".$_GET["email"]."' AND hash='".$_GET["hash"]."' AND isactive='0'";
+	$result = $conn->query($sql) or die($conn->error);
+	$match  = $result->num_rows;
 	echo $match;
 	if($match > 0){
         // We have a match, activate the account
-        mysql_query("UPDATE user SET isactive='1' WHERE email='".$email."' AND hash='".$hash."' AND isactive='0'") or die(mysql_error());
+        $sql = "UPDATE user SET isactive='1' WHERE email='".$_GET["email"]."' AND hash='".$_GET["hash"]."' AND isactive='0'";
+		$result = $conn->query($sql) or die($conn->error);
         $message = "Your account has been activated, you can now login";
     }else{
         // No match -> invalid url or account has already been activated.
          $message = "The url is either invalid or you already have activated your account";
     }
+    $conn->close();
 }
 else{
     // Invalid approach
