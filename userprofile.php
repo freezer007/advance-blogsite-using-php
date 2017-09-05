@@ -7,6 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<?php
 		session_start();
 		$dis = "display: none;";
+		echo $_SESSION["eml"];
 		if ($_SESSION["eml"] != "")
 {
 	$dis = "";
@@ -45,14 +46,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="top-nav">
 				<ul>
-					<li><a href="index.php"> <span> </span></a></li>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1">Blog</a></li>
-					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
-					<li><a href="about.php">About us</a></li>
-					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
-					<div class="clear"> </div>
-				</ul>
+                    <li><a href="index.php"> <span> </span></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="search.php?page=1&gener=blog" >Search</a></li>
+                    <?php if ($_SESSION["per"] == "RWX"){?>
+                    <li><a href="admin.php?gener=User&page=1">Admin</a></li>
+                    <?php }?>
+                    <li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="profile.php" >Profile</a></li>
+                    <?php }?>
+                    <li><a href="about.php">About us</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="logout.php" >Logout</a></li>
+                    <?php }?>
+                    <div class="clear"> </div>
+                </ul>
 			</div>
 			<div class="clear"> </div>
 		</div>
@@ -97,6 +106,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    	$sql = "SELECT * FROM follow where follows = true and userid ='".$page1."'";
 						$result = $conn->query($sql) or die($conn->error);
 						$followers = $result->num_rows;
+						$sql = "SELECT * FROM follow where follows = true and followerid ='".$page1."'";
+						$result = $conn->query($sql) or die($conn->error);
+						$following = $result->num_rows;
 					    $conn->close(); 
 					    if($id == $_SESSION["id"])
 					    {
@@ -115,14 +127,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---strat-about---->
 		<div class="about">
 			<div class="wrap">
+			<?php if($_SESSION["id"] != ""){?>
 			<div id="makeithidden" style="<?php echo $display;?>">
 				<a class="comment-replay" href="uedit.php?id=<?php echo $id;?>" style="float: right;">Edit the profile page</a>
 			</div><br><div id="makeithidden" style="<?php echo $notdisplay;?>">
 				<a class="comment-replay" href="addfollow.php?userid=<?php echo $page1;?>" style="float: right;">follow(<?php echo $followers;?>)</a>
 			</div><br>
+			<?php }?>
 					<h3>about <?php echo $name;?></h3>
 					<div class="team-grids">
-						<a href="#"><img src="<?php echo $src; ?>" alt="" /></a><br><h4><a href="#" style="font-size: 32px">name:-<?php echo $name;?></a></h4><span>email :-<?php echo $email;?><br>gender :-<?php echo $gender;?></span>
+						<a href="#"><img src="<?php echo $src; ?>" alt="" /></a><br><h4><a href="#" style="font-size: 32px">name:-<?php echo $name;?></a></h4><span>email :-<?php echo $email;?><br>gender :-<?php echo $gender;?><br>followers:-<?php echo $followers;?><br>following:-<?php echo $following;?></span>
 						    <p>Description:- <?php echo $description;?></p>	
 						</div>
 						<div class="clear"> </div>

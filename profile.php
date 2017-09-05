@@ -53,15 +53,22 @@ if($_SESSION["per"] == "R--")
 			</div>
 			<div class="top-nav">
 				<ul>
-					<li><a href="index.php"> <span> </span></a></li>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
-					<li class="active"><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
-					<li><a href="singup/forgot.php">change password</a></li>
-					<li><a href="about.php">About us</a></li>
-					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
-					<div class="clear"> </div>
-				</ul>
+                    <li><a href="index.php"> <span> </span></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="search.php?page=1&gener=blog" >Search</a></li>
+                    <?php if ($_SESSION["per"] == "RWX"){?>
+                    <li><a href="admin.php?gener=User&page=1">Admin</a></li>
+                    <?php }?>
+                    <li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li  class="active"><a href="profile.php" >Profile</a></li>
+                    <?php }?>
+                    <li><a href="about.php">About us</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="logout.php" >Logout</a></li>
+                    <?php }?>
+                    <div class="clear"> </div>
+                </ul>
 			</div>
 			<div class="clear"> </div>
 		</div>

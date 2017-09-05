@@ -96,14 +96,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {   // form submit
             </div>
             <div class="top-nav">
                 <ul>
-
                     <li><a href="index.php"> <span> </span></a></li>
                     <li><a href="index.php">Home</a></li>
                     <li class="active"><a href="search.php?page=1&gener=blog" >Search</a></li>
                     <?php if ($_SESSION["per"] == "RWX"){?>
                     <li><a href="admin.php?gener=User&page=1">Admin</a></li>
                     <?php }?>
-                    <li><a href="search.php?page=1&gener=Mobile">Blog</a></li>
+                    <li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
                     <?php if ($_SESSION["eml"] != ""){?>
                     <li><a href="profile.php" >Profile</a></li>
                     <?php }?>

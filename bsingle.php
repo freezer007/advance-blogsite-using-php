@@ -30,14 +30,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="top-nav">
 				<ul>
-					<li><a href="index.php"> <span> </span></a></li>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
-					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
-					<li><a href="about.php">About us</a></li>
-					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
-					<div class="clear"> </div>
-				</ul>
+                    <li><a href="index.php"> <span> </span></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="search.php?page=1&gener=blog" >Search</a></li>
+                    <?php if ($_SESSION["per"] == "RWX"){?>
+                    <li><a href="admin.php?gener=User&page=1">Admin</a></li>
+                    <?php }?>
+                    <li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="profile.php" >Profile</a></li>
+                    <?php }?>
+                    <li><a href="about.php">About us</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="logout.php" >Logout</a></li>
+                    <?php }?>
+                    <div class="clear"> </div>
+                </ul>
 			</div>
 			<div class="clear"> </div>
 		</div>
@@ -100,6 +108,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<?php echo $fullblog; ?>
 						</div>
 						<hr />
+						<?php if($_SESSION["id"] != ""){?>
 						<?php 
 						$servername = "localhost";
 						$username = "root";
@@ -124,6 +133,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						$conn->close();?>
 						<a href="addlike.php?uid=<?php echo "1"; ?>&blogid=<?php echo  $page1;?>">like(<?php echo $ans;?>)</a>
 						<hr/>
+						<?php }?>
 						<div class="artical-comments">
 							<h2>Comments</h2>
 							<?php 
@@ -141,13 +151,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							$result = $conn->query($sql) or die($conn->error);
 							while($row = $result->fetch_assoc()) {
 									$cid = $row["id"];
+									$userid = $row["userid"];
 							        $name = $row["uname"];
 							        $commendate = $row["commentdate"];
 							        $commen = $row["comment"];
+							        $sql2 = "SELECT * FROM user where id = '".$userid."'";
+									$result22 = $conn->query($sql2) or die($conn->error);
+									while($row = $result22->fetch_assoc()) {$isrc = $row["imsrc"];}
 							        ?>
 							<div class="artical-comment-grid">
 								<div class="artical-comment-grid-left">
-									<a href="#"><img src="images/commenter-pic1.png"  alt="" /></a>
+									<a href="#"><img src="<?php echo $isrc;?>"  alt="" /></a>
 								</div>
 								<div class="artical-comment-grid-right">
 									<h4><a href="#"><?php echo $name; ?></a></h4>
@@ -184,13 +198,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							$sql = "SELECT * FROM reply where commentid = '".$cid."' ORDER BY reply DESC ";
 							$result2 = $conn->query($sql) or die($conn->error);
 							while($row = $result2->fetch_assoc()) {
+									$userid = $row["userid"];
 							        $name = $row["uname"];
 							        $repldate = $row["replydate"];
 							        $repl = $row["reply"]; 
+							        $sql2 = "SELECT * FROM user where id = '".$userid."'";
+									$result21 = $conn->query($sql2) or die($conn->error);
+									while($row = $result21->fetch_assoc()) {$isrc = $row["imsrc"];}
 							?>
 							<div class="artical-comment-grid sub-comment-grid">
 								<div class="artical-comment-grid-left">
-									<a href="#"><img src="images/commenter-pic.png"  alt="" /></a>
+									<a href="#"><img src="<?php echo $isrc;?>"  alt="" /></a>
 								</div>
 								<div class="artical-comment-grid-right">
 									<h4><a href="#"><?php echo $name; ?></a></h4>
@@ -211,7 +229,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<!-----start-leavea comment---->
 						<div class="leave-comment-form">
 							<div class="leve-comment">
-
+								<?php if($_SESSION["id"] != ""){?>
 								<h2>Leave a Comment</h2>
 								<form action="bsinglecomment.php" method="post">
 									<div>
@@ -223,6 +241,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									</div>
 									<input type="submit" value="Post-comment" />
 								</form>
+								<?php }?>
 							</div>
 						</div>
 						<!-----//End-leavea comment---->

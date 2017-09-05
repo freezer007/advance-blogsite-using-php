@@ -127,14 +127,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="top-nav">
 				<ul>
-					<li><a href="index.php"> <span> </span></a></li>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="blog.php?page=1">Blog</a></li>
-					<li><a href="profile.php" style="<?php echo $dis ?>">Profile</a></li>
-					<li><a href="about.php">About us</a></li>
-					<li><a href="logout.php" style="<?php echo $dis ?>">Logout</a></li>
-					<div class="clear"> </div>
-				</ul>
+                    <li><a href="index.php"> <span> </span></a></li>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="search.php?page=1&gener=blog" >Search</a></li>
+                    <?php if ($_SESSION["per"] == "RWX"){?>
+                    <li  class="active"><a href="admin.php?gener=User&page=1">Admin</a></li>
+                    <?php }?>
+                    <li><a href="blog.php?page=1&gener=Mobile">Blog</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="profile.php" >Profile</a></li>
+                    <?php }?>
+                    <li><a href="about.php">About us</a></li>
+                    <?php if ($_SESSION["eml"] != ""){?>
+                    <li><a href="logout.php" >Logout</a></li>
+                    <?php }?>
+                    <div class="clear"> </div>
+                </ul>
 			</div>
 			<div class="clear"> </div>
 		</div>
@@ -204,7 +212,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</select>
 							<input type="hidden" name="id" value="<?php echo $id;?>">
 							<input type="submit" value="Edit">
-							</form>
+							</form><br>
+							<a href="admin/deletec.php?blogid=<?php echo $id;?>">Delete</a>
 							<?php }?>
 
 
